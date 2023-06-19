@@ -14,7 +14,7 @@
 #import "FBSDKTypeUtility.h"
 
 #define kChunkSize 1024
-
+ 
 static NSString *const FBSDK_BASICUTILITY_ANONYMOUSIDFILENAME = @"com-facebook-sdk-PersistedAnonymousID.json";
 static NSString *const FBSDK_BASICUTILITY_ANONYMOUSID_KEY = @"anon_id";
 
