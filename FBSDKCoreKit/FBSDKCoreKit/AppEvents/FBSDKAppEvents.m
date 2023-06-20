@@ -556,31 +556,31 @@ static BOOL g_explicitEventsLoggedYet = NO;
 
 #if !TARGET_OS_TV
 
-- (void)augmentHybridWebView:(WKWebView *)webView
+- (void)augmentHybridWebView:(NSObject *)webView
 {
   [self validateConfiguration];
 
-  if ([webView isKindOfClass:WKWebView.class]) {
-    if (WKUserScript.class != nil) {
-      WKUserContentController *controller = webView.configuration.userContentController;
-      FBSDKHybridAppEventsScriptMessageHandler *scriptHandler = [[FBSDKHybridAppEventsScriptMessageHandler alloc] initWithEventLogger:self
-                                                                                                                      loggingNotifier:self.appEventsUtility];
-      [controller addScriptMessageHandler:scriptHandler name:FBSDKAppEventsWKWebViewMessagesHandlerKey];
-
-      NSString *js = [NSString stringWithFormat:@"window.fbmq_%@={'sendEvent': function(pixel_id,event_name,custom_data){var msg={\"%@\":pixel_id, \"%@\":event_name,\"%@\":custom_data};window.webkit.messageHandlers[\"%@\"].postMessage(msg);}, 'getProtocol':function(){return \"%@\";}}",
-                      self.appID,
-                      FBSDKAppEventsWKWebViewMessagesPixelIDKey,
-                      FBSDKAppEventsWKWebViewMessagesEventKey,
-                      FBSDKAppEventsWKWebViewMessagesParamsKey,
-                      FBSDKAppEventsWKWebViewMessagesHandlerKey,
-                      FBSDKAppEventsWKWebViewMessagesProtocolKey
-      ];
-
-      [controller addUserScript:[[WKUserScript.class alloc] initWithSource:js injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:NO]];
-    }
-  } else {
+//  if ([webView isKindOfClass:WKWebView.class]) {
+//    if (WKUserScript.class != nil) {
+//      WKUserContentController *controller = webView.configuration.userContentController;
+//      FBSDKHybridAppEventsScriptMessageHandler *scriptHandler = [[FBSDKHybridAppEventsScriptMessageHandler alloc] initWithEventLogger:self
+//                                                                                                                      loggingNotifier:self.appEventsUtility];
+//      [controller addScriptMessageHandler:scriptHandler name:FBSDKAppEventsWKWebViewMessagesHandlerKey];
+//
+//      NSString *js = [NSString stringWithFormat:@"window.fbmq_%@={'sendEvent': function(pixel_id,event_name,custom_data){var msg={\"%@\":pixel_id, \"%@\":event_name,\"%@\":custom_data};window.webkit.messageHandlers[\"%@\"].postMessage(msg);}, 'getProtocol':function(){return \"%@\";}}",
+//                      self.appID,
+//                      FBSDKAppEventsWKWebViewMessagesPixelIDKey,
+//                      FBSDKAppEventsWKWebViewMessagesEventKey,
+//                      FBSDKAppEventsWKWebViewMessagesParamsKey,
+//                      FBSDKAppEventsWKWebViewMessagesHandlerKey,
+//                      FBSDKAppEventsWKWebViewMessagesProtocolKey
+//      ];
+//
+//      [controller addUserScript:[[WKUserScript.class alloc] initWithSource:js injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:NO]];
+//    }
+//  } else {
     [self.appEventsUtility logAndNotify:@"You must call augmentHybridWebView with WebKit linked to your project and a WKWebView instance"];
-  }
+//  }
 }
 
 #endif

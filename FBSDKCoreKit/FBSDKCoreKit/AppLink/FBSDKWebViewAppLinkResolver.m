@@ -11,7 +11,6 @@
 #import "FBSDKWebViewAppLinkResolver.h"
 
 #import <UIKit/UIKit.h>
-#import <WebKit/WebKit.h>
 
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKCoreKit/FBSDKCoreKit-Swift.h>
@@ -146,35 +145,35 @@ static NSString *const FBSDKWebViewAppLinkResolverShouldFallbackKey = @"should_f
         return;
       }
 
-      NSHTTPURLResponse *response = result[@"response"];
+//      NSHTTPURLResponse *response = result[@"response"];
 
-      WKWebView *webView = [WKWebView new];
+//      WKWebView *webView = [WKWebView new];
 
       FBSDKWebViewAppLinkResolverWebViewDelegate *listener = [FBSDKWebViewAppLinkResolverWebViewDelegate new];
       __block FBSDKWebViewAppLinkResolverWebViewDelegate *retainedListener = listener;
-      listener.didFinishLoad = ^(WKWebView *view) {
-        if (retainedListener) {
-          [self getALDataFromLoadedPage:view handler:^(NSDictionary<NSString *, id> *ogData) {
-            [view removeFromSuperview];
-            view.navigationDelegate = nil;
-            retainedListener = nil;
-            handler([self appLinkFromALData:ogData destination:url], nil);
-          }];
-        }
+      listener.didFinishLoad = ^(NSObject *view) {
+//        if (retainedListener) {
+//          [self getALDataFromLoadedPage:view handler:^(NSDictionary<NSString *, id> *ogData) {
+//            [view removeFromSuperview];
+//            view.navigationDelegate = nil;
+//            retainedListener = nil;
+//            handler([self appLinkFromALData:ogData destination:url], nil);
+//          }];
+//        }
       };
-      listener.didFailLoadWithError = ^(WKWebView *view, NSError *loadError) {
+      listener.didFailLoadWithError = ^(NSObject *view, NSError *loadError) {
         if (retainedListener) {
-          [view removeFromSuperview];
-          view.navigationDelegate = nil;
+//          [view removeFromSuperview];
+//          view.navigationDelegate = nil;
           retainedListener = nil;
           handler(nil, loadError);
         }
       };
-      webView.navigationDelegate = listener;
-      webView.hidden = YES;
-      [webView loadRequest:[NSURLRequest requestWithURL:response.URL]];
-      UIWindow *window = UIApplication.sharedApplication.windows.firstObject;
-      [window addSubview:webView];
+//      webView.navigationDelegate = listener;
+//      webView.hidden = YES;
+//      [webView loadRequest:[NSURLRequest requestWithURL:response.URL]];
+//      UIWindow *window = UIApplication.sharedApplication.windows.firstObject;
+//      [window addSubview:webView];
     });
   }];
 }
@@ -217,23 +216,11 @@ static NSString *const FBSDKWebViewAppLinkResolverShouldFallbackKey = @"should_f
   return al;
 }
 
-- (void)getALDataFromLoadedPage:(WKWebView *)webView
+- (void)getALDataFromLoadedPage:(NSObject *)webView
                         handler:(void (^)(NSDictionary<NSString *, id> *))handler
 {
   // Run some JavaScript in the webview to fetch the meta tags.
-  [webView evaluateJavaScript:FBSDKWebViewAppLinkResolverTagExtractionJavaScript
-            completionHandler:^(id _Nullable evaluateResult, NSError *_Nullable error) {
-              NSString *jsonString = [evaluateResult isKindOfClass:NSString.class] ? evaluateResult : nil;
-              error = nil;
-              NSData *encodedJSON = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
-              if (encodedJSON) {
-                NSArray<NSDictionary<NSString *, id> *> *arr =
-                [FBSDKTypeUtility JSONObjectWithData:encodedJSON
-                                             options:0
-                                               error:&error];
-                handler([self parseALData:arr]);
-              }
-            }];
+
 }
 
 /*

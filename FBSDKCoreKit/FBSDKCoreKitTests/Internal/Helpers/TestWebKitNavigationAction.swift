@@ -6,8 +6,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import WebKit
-
 final class TestWebKitNavigationAction: WKNavigationAction {
   let stubbedRequest: URLRequest
   let stubbedNavigationType: WKNavigationType

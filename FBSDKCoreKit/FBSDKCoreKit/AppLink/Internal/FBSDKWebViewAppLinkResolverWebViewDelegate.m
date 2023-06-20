@@ -10,21 +10,19 @@
 
 #import "FBSDKWebViewAppLinkResolverWebViewDelegate.h"
 
-#import <WebKit/WebKit.h>
-
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation FBSDKWebViewAppLinkResolverWebViewDelegate
 
-- (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation
+- (void)webView:(NSObject *)webView didFinishNavigation:(null_unspecified NSObject *)navigation
 {
   if (self.didFinishLoad) {
     self.didFinishLoad(webView);
   }
 }
 
-- (void)    webView:(WKWebView *)webView
-  didFailNavigation:(null_unspecified WKNavigation *)navigation
+- (void)    webView:(NSObject *)webView
+  didFailNavigation:(null_unspecified NSObject *)navigation
           withError:(NSError *)error
 {
   if (self.didFailLoadWithError) {
@@ -32,16 +30,16 @@ NS_ASSUME_NONNULL_BEGIN
   }
 }
 
-- (void)                  webView:(WKWebView *)webView
-  decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction
-                  decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
+- (void)                  webView:(NSObject *)webView
+  decidePolicyForNavigationAction:(NSObject *)navigationAction
+                  decisionHandler:(void (^)(NSObject*))decisionHandler
 {
   if (self.hasLoaded) {
     self.didFinishLoad(webView);
-    decisionHandler(WKNavigationActionPolicyCancel);
+//    decisionHandler();
   } else {
     self.hasLoaded = YES;
-    decisionHandler(WKNavigationActionPolicyAllow);
+//    decisionHandler();
   }
 }
 

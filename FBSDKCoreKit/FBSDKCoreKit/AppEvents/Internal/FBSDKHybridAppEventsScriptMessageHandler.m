@@ -41,40 +41,9 @@ NSString *const FBSDKAppEventsWKWebViewMessagesPixelReferralParamKey = @"_fb_pix
   return self;
 }
 
-- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message
+- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(NSObject *)message
 {
-  if ([message.name isEqualToString:FBSDKAppEventsWKWebViewMessagesHandlerKey]) {
-    NSDictionary<NSString *, id> *body = [FBSDKTypeUtility dictionaryValue:message.body];
-    if (!body) {
-      return;
-    }
-    NSString *event = body[FBSDKAppEventsWKWebViewMessagesEventKey];
-    if ([event isKindOfClass:NSString.class] && (event.length > 0)) {
-      NSString *stringedParams = [FBSDKTypeUtility stringValueOrNil:body[FBSDKAppEventsWKWebViewMessagesParamsKey]];
-      NSMutableDictionary<FBSDKAppEventParameterName, id> *params = nil;
-      NSError *jsonParseError = nil;
-      if (stringedParams) {
-        params = [FBSDKTypeUtility JSONObjectWithData:[stringedParams dataUsingEncoding:NSUTF8StringEncoding]
-                                              options:NSJSONReadingMutableContainers
-                                                error:&jsonParseError
-        ];
-      }
-      NSString *pixelID = body[FBSDKAppEventsWKWebViewMessagesPixelIDKey];
-      if (pixelID == nil) {
-        [self.loggingNotifier logAndNotify:@"Can't bridge an event without a referral Pixel ID. Check your webview Pixel configuration."];
-        return;
-      }
-      if (jsonParseError != nil || ![params isKindOfClass:[NSDictionary<NSString *, id> class]] || params == nil) {
-        [self.loggingNotifier logAndNotify:@"Could not find parameters for your Pixel request. Check your webview Pixel configuration."];
-        params = [@{FBSDKAppEventsWKWebViewMessagesPixelReferralParamKey : pixelID} mutableCopy];
-      } else {
-        [FBSDKTypeUtility dictionary:params setObject:pixelID forKey:FBSDKAppEventsWKWebViewMessagesPixelReferralParamKey];
-      }
-      [self.eventLogger logInternalEvent:event
-                              parameters:params
-                      isImplicitlyLogged:NO];
-    }
-  }
+
 }
 
 @end

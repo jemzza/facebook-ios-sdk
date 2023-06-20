@@ -10,14 +10,13 @@
 
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <Foundation/Foundation.h>
-#import <WebKit/WebKit.h>
 
 #import "FBSDKEventLogging.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 NS_SWIFT_NAME(HybridAppEventsScriptMessageHandler)
-@interface FBSDKHybridAppEventsScriptMessageHandler : NSObject <WKScriptMessageHandler>
+@interface FBSDKHybridAppEventsScriptMessageHandler : NSObject <NSObject>
 
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;

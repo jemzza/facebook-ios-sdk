@@ -9,18 +9,17 @@
 #if !TARGET_OS_TV
 
 #import <UIKit/UIKit.h>
-#import <WebKit/WebKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 NS_SWIFT_NAME(WebView)
 @protocol FBSDKWebView
 
-@property (nullable, nonatomic, weak) id<WKNavigationDelegate> navigationDelegate;
+@property (nullable, nonatomic, weak) id<NSObject> navigationDelegate;
 @property (nonatomic) CGRect frame;
 @property (nonatomic) CGRect bounds;
 
-- (nullable WKNavigation *)loadRequest:(NSURLRequest *)request;
+- (nullable NSObject *)loadRequest:(NSURLRequest *)request;
 - (void)stopLoading;
 
 @end

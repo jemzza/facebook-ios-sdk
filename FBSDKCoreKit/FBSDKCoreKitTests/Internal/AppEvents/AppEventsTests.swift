@@ -694,7 +694,7 @@ final class AppEventsTests: XCTestCase {
       { self.appEvents.pushNotificationsDeviceTokenString = foo },
       { self.appEvents.flush() },
       { self.appEvents.requestForCustomAudienceThirdPartyID(accessToken: SampleAccessTokens.validToken) },
-      { self.appEvents.augmentHybridWebView(WKWebView()) },
+      { self.appEvents.augmentHybridWebView(NSObject()) },
       { self.appEvents.sendEventBindingsToUnity() },
       { self.appEvents.activateApp() },
       { _ = self.appEvents.userID },

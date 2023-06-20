@@ -9,14 +9,13 @@
 #if !TARGET_OS_TV
 
 #import <Foundation/Foundation.h>
-#import <WebKit/WebKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FBSDKWebViewAppLinkResolverWebViewDelegate : NSObject <WKNavigationDelegate>
+@interface FBSDKWebViewAppLinkResolverWebViewDelegate : NSObject <NSObject>
 
-@property (nonatomic, copy) void (^didFinishLoad)(WKWebView *webView);
-@property (nonatomic, copy) void (^didFailLoadWithError)(WKWebView *webView, NSError *error);
+@property (nonatomic, copy) void (^didFinishLoad)(NSObject *webView);
+@property (nonatomic, copy) void (^didFailLoadWithError)(NSObject *webView, NSError *error);
 @property (nonatomic, assign) BOOL hasLoaded;
 
 @end

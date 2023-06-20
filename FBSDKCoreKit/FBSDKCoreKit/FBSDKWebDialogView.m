@@ -10,8 +10,6 @@
 
 #import "FBSDKWebDialogView+Internal.h"
 
-#import <WebKit/WebKit.h>
-
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKCoreKit/FBSDKCoreKit-Swift.h>
 #import <FBSDKCoreKit_Basics/FBSDKCoreKit_Basics.h>
@@ -21,7 +19,7 @@
 
 #define FBSDK_WEB_DIALOG_VIEW_BORDER_WIDTH 10.0
 
-@interface FBSDKWebDialogView () <WKNavigationDelegate>
+@interface FBSDKWebDialogView () <NSObject>
 
 @property (nonatomic, strong) UIButton *closeButton;
 @property (nonatomic, strong) UIActivityIndicatorView *loadingView;
@@ -199,7 +197,7 @@ static id<FBSDKErrorCreating> _errorFactory;
 
 #pragma mark - WKNavigationDelegate
 
-- (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error
+- (void)webView:(NSObject *)webView didFailNavigation:(NSObject *)navigation withError:(NSError *)error
 {
   [self.loadingView stopAnimating];
 
@@ -214,46 +212,14 @@ static id<FBSDKErrorCreating> _errorFactory;
   }
 }
 
-- (void)                  webView:(WKWebView *)webView
-  decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction
-                  decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
+- (void)                  webView:(NSObject *)webView
+  decidePolicyForNavigationAction:(NSObject *)navigationAction
+                  decisionHandler:(void (^)(NSObject*))decisionHandler
 {
-  NSURL *URL = navigationAction.request.URL;
 
-  if ([URL.scheme isEqualToString:@"fbconnect"]) {
-    NSMutableDictionary<NSString *, id> *parameters = [[FBSDKBasicUtility dictionaryWithQueryString:URL.query] mutableCopy];
-    [parameters addEntriesFromDictionary:[FBSDKBasicUtility dictionaryWithQueryString:URL.fragment]];
-    if ([URL.resourceSpecifier hasPrefix:@"//cancel"]) {
-      NSInteger errorCode = [FBSDKTypeUtility integerValue:parameters[@"error_code"]];
-      if (errorCode) {
-        NSString *errorMessage = [FBSDKTypeUtility coercedToStringValue:parameters[@"error_msg"]];
-        NSError *error = [self.class.errorFactory errorWithCode:errorCode
-                                                       userInfo:nil
-                                                        message:errorMessage
-                                                underlyingError:nil];
-        [self.delegate webDialogView:self didFailWithError:error];
-      } else {
-        [self.delegate webDialogViewDidCancel:self];
-      }
-    } else {
-      [self.delegate webDialogView:self didCompleteWithResults:parameters];
-    }
-    decisionHandler(WKNavigationActionPolicyCancel);
-  } else if (navigationAction.navigationType == WKNavigationTypeLinkActivated) {
-    if (@available(iOS 10.0, *)) {
-      [self.class.urlOpener openURL:URL options:@{} completionHandler:^(BOOL success) {
-        decisionHandler(WKNavigationActionPolicyCancel);
-      }];
-    } else {
-      [self.class.urlOpener openURL:URL];
-      decisionHandler(WKNavigationActionPolicyCancel);
-    }
-  } else {
-    decisionHandler(WKNavigationActionPolicyAllow);
-  }
 }
 
-- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
+- (void)webView:(NSObject *)webView didFinishNavigation:(NSObject *)navigation
 {
   [self.loadingView stopAnimating];
   [self.delegate webDialogViewDidFinishLoad:self];

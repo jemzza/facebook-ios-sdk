@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #if !TARGET_OS_TV
- #import <WebKit/WebKit.h>
+#import <Foundation/Foundation.h>
 #endif
 
 #import <FBSDKCoreKit/FBSDKAppEventName.h>
@@ -488,7 +488,7 @@ NS_SWIFT_NAME(setUser(email:firstName:lastName:phone:dateOfBirth:gender:city:sta
 
  @param webView The webview to augment with the additional JavaScript behavior
  */
-- (void)augmentHybridWebView:(WKWebView *)webView;
+- (void)augmentHybridWebView:(NSObject *)webView;
 #endif
 
 /*

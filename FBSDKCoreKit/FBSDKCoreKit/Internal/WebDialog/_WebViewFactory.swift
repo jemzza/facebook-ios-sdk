@@ -19,6 +19,7 @@ import Foundation
 @objc(FBSDKWebViewFactory)
 public final class _WebViewFactory: NSObject, _WebViewProviding {
   public func createWebView(frame: CGRect) -> WebView {
-    WKWebView(frame: frame)
+//    WKWebView(frame: frame)
+    NSObject()
   }
 }
