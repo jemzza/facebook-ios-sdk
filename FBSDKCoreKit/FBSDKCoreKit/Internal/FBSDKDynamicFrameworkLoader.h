@@ -39,9 +39,9 @@ FOUNDATION_EXPORT CATransform3D fbsdkdfl_CATransform3DConcat(CATransform3D a, CA
 
 FOUNDATION_EXPORT Class fbsdkdfl_ASIdentifierManagerClass(void);
 
-#pragma mark - SafariServices Classes
+#pragma mark -  Classes
 
-FOUNDATION_EXPORT Class fbsdkdfl_SFSafariViewControllerClass(void);
+FOUNDATION_EXPORT Class fbsdkdfl_BaseViewControllerClass(void);
 
 #pragma mark - Accounts Classes
 

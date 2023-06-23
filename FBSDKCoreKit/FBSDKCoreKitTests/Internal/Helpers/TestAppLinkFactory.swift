@@ -10,7 +10,7 @@ final class TestAppLinkFactory: _AppLinkCreating {
   func createAppLink(
     sourceURL: URL?,
     targets: [AppLinkTargetProtocol],
-    webURL: URL?,
+    url: URL?,
     isBackToReferrer: Bool
   ) -> _AppLinkProtocol {
     TestAppLink()

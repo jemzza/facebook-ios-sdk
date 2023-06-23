@@ -24,4 +24,4 @@ protocol AuthenticationSessionProtocol {
   var presentationContextProvider: ASWebAuthenticationPresentationContextProviding? { get set }
 }
 
-extension ASWebAuthenticationSession: AuthenticationSessionProtocol {}
+//extension ASWebAuthenticationSession: AuthenticationSessionProtocol {}

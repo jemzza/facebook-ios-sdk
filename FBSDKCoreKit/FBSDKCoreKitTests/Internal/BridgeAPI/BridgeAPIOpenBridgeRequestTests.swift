@@ -9,7 +9,6 @@
 @testable import FBSDKCoreKit
 
 import Foundation
-import SafariServices
 import XCTest
 
 final class BridgeAPIOpenBridgeRequestTests: XCTestCase {

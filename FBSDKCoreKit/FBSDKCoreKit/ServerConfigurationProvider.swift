@@ -36,8 +36,8 @@ public final class ServerConfigurationProvider: NSObject {
     _ServerConfigurationManager.shared.cachedServerConfiguration().loggingToken
   }
 
-  public func shouldUseSafariViewController(forDialogName dialogName: String) -> Bool {
-    _ServerConfigurationManager.shared.cachedServerConfiguration().useSafariViewController(forDialogName: dialogName)
+  public func shouldUseBaseViewController(forDialogName dialogName: String) -> Bool {
+    _ServerConfigurationManager.shared.cachedServerConfiguration().useBaseViewController(forDialogName: dialogName)
   }
 
   public func loadServerConfiguration(completion: LoginTooltipBlock?) {

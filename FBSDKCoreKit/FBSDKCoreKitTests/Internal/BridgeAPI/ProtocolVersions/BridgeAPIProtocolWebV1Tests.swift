@@ -10,7 +10,7 @@
 
 import XCTest
 
-final class BridgeAPIProtocolWebV1Tests: XCTestCase {
+final class BridgeAPIProtocol1Tests: XCTestCase {
 
   enum Keys {
     static let actionID = "action_id"
@@ -56,7 +56,7 @@ final class BridgeAPIProtocolWebV1Tests: XCTestCase {
   }
 
   // swiftlint:disable implicitly_unwrapped_optional
-  var bridge: BridgeAPIProtocolWebV1!
+  var bridge: BridgeAPIProtocol1!
   var errorFactory: ErrorCreating!
   var internalUtility: TestInternalUtility!
   // swiftlint:enable implicitly_unwrapped_optional
@@ -66,7 +66,7 @@ final class BridgeAPIProtocolWebV1Tests: XCTestCase {
 
     errorFactory = TestErrorFactory()
     internalUtility = TestInternalUtility()
-    bridge = BridgeAPIProtocolWebV1(
+    bridge = BridgeAPIProtocol1(
       errorFactory: errorFactory,
       internalUtility: internalUtility
     )
@@ -92,7 +92,7 @@ final class BridgeAPIProtocolWebV1Tests: XCTestCase {
   }
 
   func testDefaultDependencies() throws {
-    bridge = BridgeAPIProtocolWebV1()
+    bridge = BridgeAPIProtocol1()
 
     let reporter = try _ErrorFactory.getDependencies().reporter
     XCTAssertTrue(

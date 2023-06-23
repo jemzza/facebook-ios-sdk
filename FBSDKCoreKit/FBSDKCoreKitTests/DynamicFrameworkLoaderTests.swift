@@ -9,7 +9,6 @@
 @testable import FBSDKCoreKit
 
 import CoreTelephony
-import SafariServices
 import Security
 import Social
 import XCTest
@@ -230,13 +229,6 @@ final class DynamicFrameworkLoaderTests: XCTestCase {
     XCTAssertTrue(
       fbsdkdfl_ASIdentifierManagerClass() is ASIdentifierManager.Type,
       "Should dynamically load the ASIdentifierManager class"
-    )
-  }
-
-  func testSFSafariViewControllerClass() {
-    XCTAssertTrue(
-      fbsdkdfl_SFSafariViewControllerClass() is SFSafariViewController.Type,
-      "Should dynamically load the SFSafariViewController class"
     )
   }
 

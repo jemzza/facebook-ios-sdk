@@ -55,7 +55,7 @@ NSString *const FBSDKDialogConfigurationNameMessage = @"message";
 NSString *const FBSDKDialogConfigurationNameShare = @"share";
 
 NSString *const FBSDKDialogConfigurationFeatureUseNativeFlow = @"use_native_flow";
-NSString *const FBSDKDialogConfigurationFeatureUseSafariViewController = @"use_safari_vc";
+NSString *const FBSDKDialogConfigurationFeatureUseBaseViewController = @"use_safari_vc";
 
 // Increase this value when adding new fields and previous cached configurations should be
 // treated as stale.
@@ -135,11 +135,10 @@ const NSInteger FBSDKServerConfigurationVersion = 2;
   // the server to respond.
   static FBSDKServerConfiguration *_defaultServerConfiguration = nil;
   if (![_defaultServerConfiguration.appID isEqualToString:appID]) {
-    // Enable SFSafariViewController by default.
     NSDictionary<NSString *, id> *dialogFlows = @{
       FBSDKDialogConfigurationNameDefault : @{
         FBSDKDialogConfigurationFeatureUseNativeFlow : @NO,
-        FBSDKDialogConfigurationFeatureUseSafariViewController : @YES,
+        FBSDKDialogConfigurationFeatureUseBaseViewController : @YES,
       },
       FBSDKDialogConfigurationNameMessage : @{
         FBSDKDialogConfigurationFeatureUseNativeFlow : @YES,
@@ -187,9 +186,9 @@ const NSInteger FBSDKServerConfigurationVersion = 2;
   return [self _useFeatureWithKey:FBSDKDialogConfigurationFeatureUseNativeFlow dialogName:dialogName];
 }
 
-- (BOOL)useSafariViewControllerForDialogName:(NSString *)dialogName
+- (BOOL)useBaseViewControllerForDialogName:(NSString *)dialogName
 {
-  return [self _useFeatureWithKey:FBSDKDialogConfigurationFeatureUseSafariViewController dialogName:dialogName];
+  return [self _useFeatureWithKey:FBSDKDialogConfigurationFeatureUseBaseViewController dialogName:dialogName];
 }
 
 - (BOOL)_useFeatureWithKey:(NSString *)key dialogName:(NSString *)dialogName

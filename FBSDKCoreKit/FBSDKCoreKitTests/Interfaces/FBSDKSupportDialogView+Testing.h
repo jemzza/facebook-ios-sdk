@@ -6,15 +6,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-#import "FBSDKWebDialogView+Internal.h"
+#import "FBSDKDialogView+Internal.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FBSDKWebDialogView (Testing) <WKNavigationDelegate>
+@interface FBSDKDialogView (Testing) <WKNavigationDelegate>
 
 @property (nonatomic, strong) UIButton *closeButton;
 @property (nonatomic, strong) UIActivityIndicatorView *loadingView;
-@property (nullable, nonatomic, strong) id<FBSDKWebView> webView;
+@property (nullable, nonatomic, strong) id<FBSDKDialog> activityIndicatorView;
 
 + (void)resetClassDependencies;
 

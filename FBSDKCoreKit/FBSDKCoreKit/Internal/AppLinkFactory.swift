@@ -10,13 +10,13 @@ final class AppLinkFactory: _AppLinkCreating {
   func createAppLink(
     sourceURL: URL?,
     targets: [AppLinkTargetProtocol],
-    webURL: URL?,
+    url: URL?,
     isBackToReferrer: Bool
   ) -> _AppLinkProtocol {
     AppLink(
       sourceURL: sourceURL,
       targets: targets,
-      webURL: webURL,
+      url: url,
       isBackToReferrer: isBackToReferrer
     )
   }

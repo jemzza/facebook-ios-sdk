@@ -25,8 +25,8 @@ public final class AppLink: NSObject, _AppLinkProtocol {
    */
   public let targets: [AppLinkTargetProtocol]
 
-  /// The fallback web URL to use if no targets are installed on this device.
-  public let webURL: URL?
+  /// The fallback  URL to use if no targets are installed on this device.
+  public let url: URL?
 
   /**
    Internal property exposed to facilitate transition to Swift.
@@ -45,11 +45,11 @@ public final class AppLink: NSObject, _AppLinkProtocol {
    - Parameters:
       - sourceURL: The *URL* from which this App Link is derived.
       - targets: An ordered list of AppLinkTargets for this platform derived from App Link metadata.
-      - webURL: The fallback web URL, if any, for the app link.
+      - url: The fallback URL, if any, for the app link.
    */
-  @objc(initWithSourceURL:targets:webURL:)
-  public convenience init(sourceURL: URL?, targets: [AppLinkTargetProtocol], webURL: URL?) {
-    self.init(sourceURL: sourceURL, targets: targets, webURL: webURL, isBackToReferrer: false)
+  @objc(initWithSourceURL:targets:url:)
+  public convenience init(sourceURL: URL?, targets: [AppLinkTargetProtocol], url: URL?) {
+    self.init(sourceURL: sourceURL, targets: targets, url: url, isBackToReferrer: false)
   }
 
   /**
@@ -61,7 +61,7 @@ public final class AppLink: NSObject, _AppLinkProtocol {
    - Parameters:
       - sourceURL: The *URL* from which this App Link is derived.
       - targets: An ordered list of AppLinkTargets for this platform derived from App Link metadata.
-      - webURL: The fallback web URL, if any, for the app link.
+      - url: The fallback web URL, if any, for the app link.
    */
   @available(
     *,
@@ -70,9 +70,9 @@ public final class AppLink: NSObject, _AppLinkProtocol {
       Please use designated init to instantiate an AppLink. This method will be removed in future releases."
       """
   )
-  @objc(appLinkWithSourceURL:targets:webURL:)
-  public static func appLink(sourceURL: URL?, targets: [AppLinkTargetProtocol], webURL: URL?) -> _AppLinkProtocol {
-    AppLink(sourceURL: sourceURL, targets: targets, webURL: webURL, isBackToReferrer: false)
+  @objc(appLinkWithSourceURL:targets:url:)
+  public static func appLink(sourceURL: URL?, targets: [AppLinkTargetProtocol], url: URL?) -> _AppLinkProtocol {
+    AppLink(sourceURL: sourceURL, targets: targets, url: url, isBackToReferrer: false)
   }
 
   /**
@@ -81,11 +81,11 @@ public final class AppLink: NSObject, _AppLinkProtocol {
 
    > Warning: INTERNAL - DO NOT USE
    */
-  @objc(initWithSourceURL:targets:webURL:isBackToReferrer:)
-  public init(sourceURL: URL?, targets: [AppLinkTargetProtocol], webURL: URL?, isBackToReferrer: Bool) {
+  @objc(initWithSourceURL:targets:url:isBackToReferrer:)
+  public init(sourceURL: URL?, targets: [AppLinkTargetProtocol], url: URL?, isBackToReferrer: Bool) {
     self.sourceURL = sourceURL
     self.targets = targets
-    self.webURL = webURL
+    self.url = url
     self.isBackToReferrer = isBackToReferrer
   }
 }

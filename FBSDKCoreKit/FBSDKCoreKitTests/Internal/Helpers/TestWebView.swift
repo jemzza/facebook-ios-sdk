@@ -6,7 +6,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-final class TestWebView: UIView, WebView {
+final class TestDialog: UIView, AppConnect {
   weak var navigationDelegate: WKNavigationDelegate?
   var capturedRequest: URLRequest?
   var stopLoadingCallCount = 0

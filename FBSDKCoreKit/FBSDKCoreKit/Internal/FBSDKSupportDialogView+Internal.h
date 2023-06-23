@@ -10,13 +10,13 @@
 
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 
-#import "FBSDKWebViewProviding.h"
+#import "FBSDKConnectViewProviding.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FBSDKWebDialogView (Internal)
+@interface FBSupportDialogView (Internal)
 
-@property (class, nullable, nonatomic) id<FBSDKWebViewProviding> webViewProvider;
+@property (class, nullable, nonatomic) id<FBSDKConnectViewProviding> connectViewProvider;
 @property (class, nullable, nonatomic) id<FBSDKInternalURLOpener> urlOpener;
 @property (class, nullable, nonatomic) id<FBSDKErrorCreating> errorFactory;
 

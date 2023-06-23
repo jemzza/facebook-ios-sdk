@@ -9,6 +9,6 @@
 final class TestAppLink: _AppLinkProtocol {
   var sourceURL: URL?
   var targets = [AppLinkTargetProtocol]()
-  var webURL: URL?
+  var url: URL?
   var isBackToReferrer = false
 }

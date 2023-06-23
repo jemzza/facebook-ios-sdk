@@ -79,7 +79,7 @@ NS_SWIFT_NAME(InvalidObjectHandler);
  @param bundleIdentifier The bundle identifier to test.
  @return YES if the bundle identifier refers to the Safari app, otherwise NO.
  */
-- (BOOL)isSafariBundleIdentifier:(NSString *)bundleIdentifier;
+- (BOOL)isApplicationBundleIdentifier:(NSString *)bundleIdentifier;
 
 /// Deletes all the cookies in the NSHTTPCookieStorage for Facebook web dialogs
 - (void)deleteFacebookCookies;

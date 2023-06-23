@@ -25,7 +25,7 @@ final class CreateContextDialogTests: XCTestCase, ContextDialogDelegate {
     dialogDidCancel = false
     dialogError = nil
 
-    _WebDialog.setDependencies(
+    _SupportDialog.setDependencies(
       .init(
         errorFactory: TestErrorFactory(),
         windowFinder: TestWindowFinder(window: UIWindow())
@@ -37,7 +37,7 @@ final class CreateContextDialogTests: XCTestCase, ContextDialogDelegate {
     super.tearDown()
 
     GamingContext.current = nil
-    _WebDialog.resetDependencies()
+    _SupportDialog.resetDependencies()
   }
 
   func testShowDialogWithInvalidContent() {
@@ -61,8 +61,8 @@ final class CreateContextDialogTests: XCTestCase, ContextDialogDelegate {
   func testDialogCancelsWhenResultDoesNotContainContextID() throws {
     let dialog = SampleContextDialogs.showCreateContextDialog(withDelegate: self)
 
-    let webDialogDelegate = try XCTUnwrap(dialog?.currentWebDialog as? WebDialogViewDelegate)
-    let testWindowFinder = try XCTUnwrap(_WebDialog.getDependencies().windowFinder as? TestWindowFinder)
+    let webDialogDelegate = try XCTUnwrap(dialog?.currentWebDialog as? SupportDialogViewDelegate)
+    let testWindowFinder = try XCTUnwrap(_SupportDialog.getDependencies().windowFinder as? TestWindowFinder)
     let results = ["foo": name]
     webDialogDelegate.webDialogView(FBWebDialogView(), didCompleteWithResults: results)
 
@@ -77,8 +77,8 @@ final class CreateContextDialogTests: XCTestCase, ContextDialogDelegate {
     XCTAssertNil(GamingContext.current, "Should not have a context by default")
 
     let dialog = SampleContextDialogs.showCreateContextDialog(withDelegate: self)
-    let webDialogDelegate = try XCTUnwrap(dialog?.currentWebDialog as? WebDialogViewDelegate)
-    let testWindowFinder = try XCTUnwrap(_WebDialog.getDependencies().windowFinder as? TestWindowFinder)
+    let webDialogDelegate = try XCTUnwrap(dialog?.currentWebDialog as? SupportDialogViewDelegate)
+    let testWindowFinder = try XCTUnwrap(_SupportDialog.getDependencies().windowFinder as? TestWindowFinder)
     let resultContextIDKey = "context_id"
     let resultContextID = "1234"
     let results = [resultContextIDKey: resultContextID]
@@ -102,8 +102,8 @@ final class CreateContextDialogTests: XCTestCase, ContextDialogDelegate {
     GamingContext.current = GamingContext(identifier: "foo", size: 2)
 
     let dialog = SampleContextDialogs.showCreateContextDialog(withDelegate: self)
-    let webDialogDelegate = try XCTUnwrap(dialog?.currentWebDialog as? WebDialogViewDelegate)
-    let testWindowFinder = try XCTUnwrap(_WebDialog.getDependencies().windowFinder as? TestWindowFinder)
+    let webDialogDelegate = try XCTUnwrap(dialog?.currentWebDialog as? SupportDialogViewDelegate)
+    let testWindowFinder = try XCTUnwrap(_SupportDialog.getDependencies().windowFinder as? TestWindowFinder)
     let resultContextIDKey = "context_id"
     let resultContextID = "1234"
     let results = [resultContextIDKey: resultContextID]
@@ -125,8 +125,8 @@ final class CreateContextDialogTests: XCTestCase, ContextDialogDelegate {
 
   func testDialogCompletesWithServerError() throws {
     let dialog = SampleContextDialogs.showCreateContextDialog(withDelegate: self)
-    let webDialogDelegate = try XCTUnwrap(dialog?.currentWebDialog as? WebDialogViewDelegate)
-    let testWindowFinder = try XCTUnwrap(_WebDialog.getDependencies().windowFinder as? TestWindowFinder)
+    let webDialogDelegate = try XCTUnwrap(dialog?.currentWebDialog as? SupportDialogViewDelegate)
+    let testWindowFinder = try XCTUnwrap(_SupportDialog.getDependencies().windowFinder as? TestWindowFinder)
     let resultErrorCodeKey = "error_code"
     let resultErrorCode = 1234
     let resultErrorMessageKey = "error_message"
@@ -147,8 +147,8 @@ final class CreateContextDialogTests: XCTestCase, ContextDialogDelegate {
 
   func testDialogCancels() throws {
     let dialog = SampleContextDialogs.showCreateContextDialog(withDelegate: self)
-    let webDialogDelegate = try XCTUnwrap(dialog?.currentWebDialog as? WebDialogViewDelegate)
-    let testWindowFinder = try XCTUnwrap(_WebDialog.getDependencies().windowFinder as? TestWindowFinder)
+    let webDialogDelegate = try XCTUnwrap(dialog?.currentWebDialog as? SupportDialogViewDelegate)
+    let testWindowFinder = try XCTUnwrap(_SupportDialog.getDependencies().windowFinder as? TestWindowFinder)
 
     webDialogDelegate.webDialogViewDidCancel(FBWebDialogView())
 
@@ -161,8 +161,8 @@ final class CreateContextDialogTests: XCTestCase, ContextDialogDelegate {
 
   func testDialogFailsWithError() throws {
     let dialog = SampleContextDialogs.showCreateContextDialog(withDelegate: self)
-    let webDialogDelegate = try XCTUnwrap(dialog?.currentWebDialog as? WebDialogViewDelegate)
-    let testWindowFinder = try XCTUnwrap(_WebDialog.getDependencies().windowFinder as? TestWindowFinder)
+    let webDialogDelegate = try XCTUnwrap(dialog?.currentWebDialog as? SupportDialogViewDelegate)
+    let testWindowFinder = try XCTUnwrap(_SupportDialog.getDependencies().windowFinder as? TestWindowFinder)
 
     let error = NSError(domain: "Test", code: 1, userInfo: nil)
     webDialogDelegate.webDialogView(FBWebDialogView(), didFailWithError: error)

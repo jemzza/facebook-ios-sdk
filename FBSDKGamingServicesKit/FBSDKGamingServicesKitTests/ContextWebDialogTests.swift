@@ -42,7 +42,7 @@ final class ContextWebDialogTests: XCTestCase, ContextDialogDelegate {
   func testDialogCompletesAndUpdatesContext() throws {
     let dialog = try XCTUnwrap(contextWebDialog)
     let webDelegate = dialog as WebDialogDelegate
-    let webDialog = _WebDialog(name: "Test")
+    let webDialog = _SupportDialog(name: "Test")
     webDialog.delegate = webDelegate
     dialog.currentWebDialog = webDialog
 
@@ -57,7 +57,7 @@ final class ContextWebDialogTests: XCTestCase, ContextDialogDelegate {
   func testDialogCancelsThroughErrorResults() throws {
     let dialog = try XCTUnwrap(contextWebDialog)
     let webDelegate = dialog as WebDialogDelegate
-    let webDialog = _WebDialog(name: "Test")
+    let webDialog = _SupportDialog(name: "Test")
     webDialog.delegate = webDelegate
     dialog.currentWebDialog = webDialog
 
@@ -74,7 +74,7 @@ final class ContextWebDialogTests: XCTestCase, ContextDialogDelegate {
   func testDialogReturnsError() throws {
     let dialog = try XCTUnwrap(contextWebDialog)
     let webDelegate = dialog as WebDialogDelegate
-    let webDialog = _WebDialog(name: "Test")
+    let webDialog = _SupportDialog(name: "Test")
     webDialog.delegate = webDelegate
     dialog.currentWebDialog = webDialog
 
@@ -91,7 +91,7 @@ final class ContextWebDialogTests: XCTestCase, ContextDialogDelegate {
   func testDialogCancelsWhenWebDialogReturnsEmptyResults() throws {
     let dialog = try XCTUnwrap(contextWebDialog)
     let delegate = dialog as WebDialogDelegate
-    let webDialog = _WebDialog(name: "Test")
+    let webDialog = _SupportDialog(name: "Test")
     webDialog.delegate = delegate
     dialog.currentWebDialog = webDialog
 

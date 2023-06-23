@@ -33,7 +33,7 @@ NS_SWIFT_NAME(_AppLinkProtocol)
 @property (nonatomic, readonly, copy) NSArray<id<FBSDKAppLinkTarget>> *targets;
 
 /// The fallback web URL to use if no targets are installed on this device.
-@property (nullable, nonatomic, readonly, strong) NSURL *webURL;
+@property (nullable, nonatomic, readonly, strong) NSURL *url;
 
 /// return if this AppLink is to go back to referrer.
 @property (nonatomic, readonly, getter = isBackToReferrer, assign) BOOL backToReferrer;

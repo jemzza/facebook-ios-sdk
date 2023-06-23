@@ -16,8 +16,6 @@ enum AuthenticationSessionState {
   case started
   /// System dialog ("app wants to use facebook.com  to sign in")  to access facebook.com was presented to the user
   case showAlert
-  /// Web browser with log in to authentication was presented to the user
-  case showWebBrowser
   /// Authentication session was canceled by system. It happens when app goes to background while alert requesting access to facebook.com is presented
   case canceledBySystem
 }

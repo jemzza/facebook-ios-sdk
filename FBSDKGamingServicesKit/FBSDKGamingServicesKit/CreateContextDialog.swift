@@ -63,7 +63,7 @@ public final class CreateContextDialog: ContextWebDialog {
       windowFinder: windowFinder
     )
 
-    currentWebDialog = _WebDialog(
+    currentWebDialog = _SupportDialog(
       name: Keys.methodName,
       parameters: parameters as? [String: String],
       webViewFrame: frame

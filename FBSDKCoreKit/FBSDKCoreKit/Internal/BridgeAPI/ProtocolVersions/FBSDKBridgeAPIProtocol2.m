@@ -8,7 +8,7 @@
 
 #if !TARGET_OS_TV
 
-#import "FBSDKBridgeAPIProtocolWebV2.h"
+#import "FBSDKBridgeAPIProtocol2.h"
 
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKCoreKit/FBSDKCoreKit-Swift.h>
@@ -16,7 +16,7 @@
 #import "FBSDKErrorReporter.h"
 #import "FBSDKInternalUtility+Internal.h"
 
-@implementation FBSDKBridgeAPIProtocolWebV2
+@implementation FBSDKBridgeAPIProtocol2
 
 #pragma mark - Object Lifecycle
 

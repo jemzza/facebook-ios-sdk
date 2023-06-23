@@ -8,7 +8,7 @@
 
 #if !TARGET_OS_TV
 
-#import "FBSDKBridgeAPIProtocolWebV1.h"
+#import "FBSDKBridgeAPIProtocol1.h"
 
 #import <UIKit/UIKit.h>
 
@@ -22,7 +22,7 @@
 #define FBSDK_BRIDGE_API_PROTOCOL_WEB_V1_ACTION_ID_KEY @"action_id"
 #define FBSDK_BRIDGE_API_PROTOCOL_WEB_V1_BRIDGE_ARGS_KEY @"bridge_args"
 
-@implementation FBSDKBridgeAPIProtocolWebV1
+@implementation FBSDKBridgeAPIProtocol1
 
 // MARK: - Object Lifecycle
 

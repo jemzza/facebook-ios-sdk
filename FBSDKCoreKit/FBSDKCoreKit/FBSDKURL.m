@@ -134,7 +134,7 @@ static id<FBSDKAppLinkEventPosting> _appLinkEventPoster;
                                                                                                        appName:refererAppName];
             _appLinkReferer = [self.class.appLinkFactory createAppLinkWithSourceURL:[NSURL URLWithString:refererURLString]
                                                                             targets:@[appLinkTarget]
-                                                                             webURL:nil
+                                                                             url:nil
                                                                    isBackToReferrer:YES];
           }
 

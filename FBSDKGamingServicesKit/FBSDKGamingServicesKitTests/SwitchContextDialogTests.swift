@@ -34,7 +34,7 @@ final class SwitchContextDialogTests: XCTestCase, ContextDialogDelegate {
       delegate: self
     )
 
-    _WebDialog.setDependencies(
+    _SupportDialog.setDependencies(
       .init(
         errorFactory: TestErrorFactory(),
         windowFinder: TestWindowFinder(window: UIWindow())
@@ -43,13 +43,13 @@ final class SwitchContextDialogTests: XCTestCase, ContextDialogDelegate {
   }
 
   override func tearDown() {
-    _WebDialog.resetDependencies()
+    _SupportDialog.resetDependencies()
     GamingContext.current = nil
     dialogError = nil
     windowFinder = nil
     content = nil
     dialog = nil
-    _WebDialog.resetDependencies()
+    _SupportDialog.resetDependencies()
     super.tearDown()
   }
 

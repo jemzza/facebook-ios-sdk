@@ -7,8 +7,6 @@
  */
 
 import AuthenticationServices
-import SafariServices
-
 /**
  Internal Type exposed to facilitate transition to Swift.
  API Subject to change or removal without warning. Do not use.
@@ -19,8 +17,7 @@ public final class _BridgeAPI: NSObject,
   FBSDKApplicationObserving,
   URLOpener,
   BridgeAPIRequestOpening,
-  _ContainerViewControllerDelegate,
-  SFSafariViewControllerDelegate {
+  _ContainerViewControllerDelegate {
 
   private enum Values {
     static let authenticationSessionErrorDomain = "com.apple.AuthenticationServices.WebAuthenticationSession"
@@ -40,8 +37,8 @@ public final class _BridgeAPI: NSObject,
   var authenticationSessionCompletionHandler: AuthenticationCompletionHandler?
   var authenticationSessionState = AuthenticationSessionState.none
   var isExpectingBackground = false
-  var safariViewController: SFSafariViewController?
-  var isDismissingSafariViewController = false
+  var viewController: UIViewController?
+  var isDismissingViewController = false
   var isActive = false
 
   public static let shared = _BridgeAPI(
@@ -113,21 +110,20 @@ public final class _BridgeAPI: NSObject,
     }
   }
 
-  private func presentSafariViewController(
+  private func presentViewController(
     with url: URL,
     in container: _ContainerViewController,
     from parent: UIViewController
   ) {
-    let safariController = SFSafariViewController(url: url)
-    safariViewController = safariController
+    let viewController = UIViewController()
 
     // Disable dismissing with edge pan gesture
-    safariController.modalPresentationStyle = .overFullScreen
-    safariController.delegate = self
-    container.displayChildController(safariController)
+    viewController.modalPresentationStyle = .overFullScreen
+    container.displayChildController(viewController)
     parent.present(container, animated: true)
   }
 
+  /*
   func openURLWithAuthenticationSession(url: URL) {
     if let session = authenticationSession {
       // swiftlint:disable:next line_length
@@ -150,6 +146,7 @@ public final class _BridgeAPI: NSObject,
     authenticationSessionState = .started
     _ = authenticationSession?.start()
   }
+  */
 
   func setSessionCompletionHandler(calling handler: @escaping SuccessBlock) {
     authenticationSessionCompletionHandler = { [weak self] potentialURL, potentialError in
@@ -179,17 +176,6 @@ public final class _BridgeAPI: NSObject,
     _ viewController: _ContainerViewController,
     animated: Bool
   ) {
-    if let safariViewController = safariViewController {
-      logger.logEntry(
-        """
-        **ERROR**:
-        The SFSafariViewController's parent view controller was dismissed.
-        This can happen if you are triggering login from a UIAlertController. Instead, make sure your topmost view \
-        controller will not be prematurely dismissed.
-        """
-      )
-      safariViewControllerDidFinish(safariViewController)
-    }
   }
 
   func handleBridgeAPIResponse(
@@ -252,10 +238,10 @@ extension _BridgeAPI {
 
     if authenticationSession != nil {
       switch authenticationSessionState {
-      case .none, .started, .showWebBrowser:
+      case .none, .started:
         break
       case .showAlert:
-        authenticationSessionState = .showWebBrowser
+          authenticationSessionState = .showAlert
       case .canceledBySystem:
         authenticationSession?.cancel()
         authenticationSession = nil
@@ -272,8 +258,8 @@ extension _BridgeAPI {
     // might have been a "didBecomeActive" event pending that we want to ignore.
     guard
       !isExpectingBackground,
-      safariViewController == nil,
-      !isDismissingSafariViewController,
+      viewController == nil,
+      !isDismissingViewController,
       !isRequestingWebAuthenticationSession
     else { return }
 
@@ -321,13 +307,13 @@ extension _BridgeAPI {
         sourceApplication: sourceApplication,
         annotation: annotation
       )
-      isDismissingSafariViewController = false
+      isDismissingViewController = false
     }
     // if they completed a SFVC flow, dismiss it.
-    if let safariViewController = safariViewController {
-      isDismissingSafariViewController = true
-      safariViewController.presentingViewController?.dismiss(animated: true, completion: completePendingOpenURLBlock)
-      self.safariViewController = nil
+    if let viewController = viewController {
+      isDismissingViewController = true
+      viewController.presentingViewController?.dismiss(animated: true, completion: completePendingOpenURLBlock)
+      self.viewController = nil
     } else {
       if authenticationSession != nil {
         authenticationSession?.cancel()
@@ -421,7 +407,7 @@ extension _BridgeAPI {
 
   public func open(
     _ request: BridgeAPIRequestProtocol,
-    useSafariViewController: Bool,
+    useBaseViewController: Bool,
     from fromViewController: UIViewController?,
     completionBlock: @escaping BridgeAPIResponseBlock
   ) {
@@ -432,8 +418,8 @@ extension _BridgeAPI {
       pendingRequestCompletionBlock = completionBlock
       let handler = bridgeAPIRequestCompletionBlock(request: request, completion: completionBlock)
 
-      if useSafariViewController {
-        openURLWithSafariViewController(url: requestURL, sender: nil, from: fromViewController, handler: handler)
+      if useBaseViewController {
+        openURLWithBaseViewController(url: requestURL, sender: nil, from: fromViewController, handler: handler)
       } else {
         open(requestURL, sender: nil, handler: handler)
       }
@@ -444,7 +430,7 @@ extension _BridgeAPI {
     }
   }
 
-  public func openURLWithSafariViewController(
+  public func openURLWithBaseViewController(
     url: URL,
     sender: URLOpening?,
     from fromViewController: UIViewController?,
@@ -459,12 +445,12 @@ extension _BridgeAPI {
 
     if sender?.isAuthenticationURL(url) == true {
       setSessionCompletionHandler(calling: handler)
-      openURLWithAuthenticationSession(url: url)
+//      openURLWithAuthenticationSession(url: url)
       return
     }
 
     guard let parent = fromViewController ?? InternalUtility.shared.topMostViewController() else {
-      logger.logEntry("There are no valid ViewController to present SafariViewController with")
+      logger.logEntry("There are no valid ViewController to present with")
       return
     }
 
@@ -484,35 +470,33 @@ extension _BridgeAPI {
       // Wait until the transition is finished before presenting SafariVC to avoid a blank screen.
       transitionCoordinator.animate(alongsideTransition: nil) { [self] _ in
         // Note SFVC init must occur inside block to avoid blank screen.
-        presentSafariViewController(with: updatedURL, in: container, from: parent)
+        presentViewController(with: updatedURL, in: container, from: parent)
       }
     } else {
-      presentSafariViewController(with: updatedURL, in: container, from: parent)
+      presentViewController(with: updatedURL, in: container, from: parent)
     }
     // Assuming Safari View Controller always opens
     handler(true, nil)
   }
 }
 
-// MARK: SFSafariViewControllerDelegate Conformance
-
 extension _BridgeAPI {
   // This means the user tapped "Done" which we should treat as a cancellation.
-  public func safariViewControllerDidFinish(_ safariViewController: SFSafariViewController) {
+  public func viewControllerDidFinish(_ viewController: UIViewController) {
     if let opener = pendingURLOpener {
       pendingURLOpener = nil
       opener.application(nil, open: nil, sourceApplication: nil, annotation: nil)
     }
     cancelBridgeRequest()
-    self.safariViewController = nil
+    self.viewController = nil
   }
 }
 
 // MARK: ASWebAuthenticationPresentationContextProviding Conformance
 
-@available(iOS 13, *)
-extension _BridgeAPI: ASWebAuthenticationPresentationContextProviding {
-  public func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
-    UIApplication.shared.keyWindow ?? ASPresentationAnchor()
-  }
-}
+//@available(iOS 13, *)
+//extension _BridgeAPI: ASWebAuthenticationPresentationContextProviding {
+//  public func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
+//    UIApplication.shared.keyWindow ?? ASPresentationAnchor()
+//  }
+//}

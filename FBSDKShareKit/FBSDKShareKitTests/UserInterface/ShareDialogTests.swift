@@ -744,7 +744,7 @@ final class ShareDialogTests: XCTestCase {
 
   func testWebDialogDelegateCancellation() {
     dialog = createEmptyDialog(mode: .web)
-    let webDialog = _WebDialog(name: "test")
+    let webDialog = _SupportDialog(name: "test")
     webDialog.delegate = dialog
     dialog.webDialog = webDialog
     dialog.webDialogDidCancel(webDialog)
@@ -763,7 +763,7 @@ final class ShareDialogTests: XCTestCase {
 
   func testWebDialogDelegateFailure() throws {
     dialog = createEmptyDialog(mode: .web)
-    let webDialog = _WebDialog(name: "test")
+    let webDialog = _SupportDialog(name: "test")
     webDialog.delegate = dialog
     dialog.webDialog = webDialog
     let error = TestSDKError(type: .unknown)
@@ -784,7 +784,7 @@ final class ShareDialogTests: XCTestCase {
 
   func testWebDialogDelegateCompletionWithCancelErrorCode() {
     dialog = createEmptyDialog(mode: .web)
-    let webDialog = _WebDialog(name: "test")
+    let webDialog = _SupportDialog(name: "test")
     webDialog.delegate = dialog
     dialog.webDialog = webDialog
     dialog.webDialog(webDialog, didCompleteWithResults: ["error_code": 4201])
@@ -803,7 +803,7 @@ final class ShareDialogTests: XCTestCase {
 
   func testWebDialogDelegateCompletionWithError() throws {
     dialog = createEmptyDialog(mode: .web)
-    let webDialog = _WebDialog(name: "test")
+    let webDialog = _SupportDialog(name: "test")
     webDialog.delegate = dialog
     dialog.webDialog = webDialog
     dialog.webDialog(
@@ -834,7 +834,7 @@ final class ShareDialogTests: XCTestCase {
 
   func testWebDialogDelegateCompletionWithCompletionGestureCancellation() {
     dialog = createEmptyDialog(mode: .web)
-    let webDialog = _WebDialog(name: "test")
+    let webDialog = _SupportDialog(name: "test")
     webDialog.delegate = dialog
     dialog.webDialog = webDialog
     dialog.webDialog(
@@ -859,7 +859,7 @@ final class ShareDialogTests: XCTestCase {
 
   func testWebDialogDelegateCompletion() throws {
     dialog = createEmptyDialog(mode: .web)
-    let webDialog = _WebDialog(name: "test")
+    let webDialog = _SupportDialog(name: "test")
     webDialog.delegate = dialog
     dialog.webDialog = webDialog
     dialog.webDialog(

@@ -8,48 +8,48 @@
 
 #if !TARGET_OS_TV
 
-#import "FBSDKWebDialogView+Internal.h"
+#import "FBSDKSupportDialogView+Internal.h"
 
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKCoreKit/FBSDKCoreKit-Swift.h>
 #import <FBSDKCoreKit_Basics/FBSDKCoreKit_Basics.h>
 
 #import "FBSDKSafeCast.h"
-#import "FBSDKWebViewProviding.h"
+#import "FBSDKConnectViewProviding.h"
 
 #define FBSDK_WEB_DIALOG_VIEW_BORDER_WIDTH 10.0
 
-@interface FBSDKWebDialogView () <NSObject>
+@interface FBSupportDialogView () <NSObject>
 
 @property (nonatomic, strong) UIButton *closeButton;
 @property (nonatomic, strong) UIActivityIndicatorView *loadingView;
-@property (nonatomic, strong) id<FBSDKWebView> webView;
+@property (nonatomic, strong) id<FBSDKConnectAppView> activityIndicatorView;
 
 @end
 
-@implementation FBSDKWebDialogView
+@implementation FBSupportDialogView
 
-static id<FBSDKWebViewProviding> _webViewProvider;
+static id<FBSDKConnectViewProviding> _connectViewProvider;
 static id<FBSDKInternalURLOpener> _urlOpener;
 static id<FBSDKErrorCreating> _errorFactory;
 
-+ (void)configureWithWebViewProvider:(id<FBSDKWebViewProviding>)webViewProvider
++ (void)configureWithViewProvider:(id<FBSDKConnectViewProviding>)viewProvider
                            urlOpener:(id<FBSDKInternalURLOpener>)urlOpener
                         errorFactory:(id<FBSDKErrorCreating>)errorFactory;
 {
-  _webViewProvider = webViewProvider;
+  _connectViewProvider = viewProvider;
   _urlOpener = urlOpener;
   _errorFactory = errorFactory;
 }
 
-+ (nullable id<FBSDKWebViewProviding>)webViewProvider
++ (nullable id<FBSDKConnectViewProviding>)connectViewProvider
 {
-  return _webViewProvider;
+  return _connectViewProvider;
 }
 
-+ (void)setWebViewProvider:(id<FBSDKWebViewProviding>)webViewProvider
++ (void)setConnectViewProvider:(id<FBSDKConnectViewProviding>)connectViewProvider
 {
-  _webViewProvider = webViewProvider;
+  _connectViewProvider = connectViewProvider;
 }
 
 + (nullable id<FBSDKInternalURLOpener>)urlOpener
@@ -80,17 +80,15 @@ static id<FBSDKErrorCreating> _errorFactory;
     self.backgroundColor = UIColor.clearColor;
     self.opaque = NO;
 
-    _webView = [self.class.webViewProvider createWebViewWithFrame:CGRectZero];
-    _webView.navigationDelegate = self;
+    _activityIndicatorView = [self.class.connectViewProvider createConnectViewWithFrame:CGRectZero];
+    _activityIndicatorView.navigationDelegate = self;
 
-    // Since we cannot constrain the webview protocol to be a UIView subclass
-    // perform a check here to make sure it can be cast to a UIView
-    UIView *webView = _FBSDKCastToClassOrNilUnsafeInternal(_webView, UIView.class);
-    if (!webView) {
+    UIView *dialogView = _FBSDKCastToClassOrNilUnsafeInternal(_activityIndicatorView, UIView.class);
+    if (!dialogView) {
       return self;
     }
 
-    [self addSubview:webView];
+    [self addSubview:dialogView];
 
     _closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *closeImage = [[FBSDKCloseIcon new] imageWithSize:CGSizeMake(29.0, 29.0)];
@@ -117,28 +115,14 @@ static id<FBSDKErrorCreating> _errorFactory;
     _loadingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:style];
     _loadingView.color = UIColor.grayColor;
     _loadingView.hidesWhenStopped = YES;
-    [webView addSubview:_loadingView];
+    [dialogView addSubview:_loadingView];
   }
   return self;
 }
 
 - (void)dealloc
 {
-  self.webView.navigationDelegate = nil;
-}
-
-#pragma mark - Public Methods
-
-- (void)loadURL:(NSURL *)URL
-{
-  [self.loadingView startAnimating];
-  [self.webView loadRequest:[NSURLRequest requestWithURL:URL]];
-}
-
-- (void)stopLoading
-{
-  [self.webView stopLoading];
-  [self.loadingView stopAnimating];
+  self.activityIndicatorView.navigationDelegate = nil;
 }
 
 #pragma mark - Layout
@@ -151,7 +135,7 @@ static id<FBSDKErrorCreating> _errorFactory;
   CGContextFillRect(context, self.bounds);
   [UIColor.blackColor setStroke];
   CGContextSetLineWidth(context, 1.0 / self.layer.contentsScale);
-  CGContextStrokeRect(context, self.webView.frame);
+  CGContextStrokeRect(context, self.activityIndicatorView.frame);
   CGContextRestoreGState(context);
   [super drawRect:rect];
 }
@@ -167,18 +151,18 @@ static id<FBSDKErrorCreating> _errorFactory;
     UIEdgeInsets iPadInsets = UIEdgeInsetsMake(verticalInset, horizontalInset, verticalInset, horizontalInset);
     bounds = UIEdgeInsetsInsetRect(bounds, iPadInsets);
   }
-  UIEdgeInsets webViewInsets = UIEdgeInsetsMake(
+  UIEdgeInsets dialogInsets = UIEdgeInsetsMake(
     FBSDK_WEB_DIALOG_VIEW_BORDER_WIDTH,
     FBSDK_WEB_DIALOG_VIEW_BORDER_WIDTH,
     FBSDK_WEB_DIALOG_VIEW_BORDER_WIDTH,
     FBSDK_WEB_DIALOG_VIEW_BORDER_WIDTH
   );
-  self.webView.frame = CGRectIntegral(UIEdgeInsetsInsetRect(bounds, webViewInsets));
+  self.activityIndicatorView.frame = CGRectIntegral(UIEdgeInsetsInsetRect(bounds, dialogInsets));
 
-  CGRect webViewBounds = self.webView.bounds;
-  self.loadingView.center = CGPointMake(CGRectGetMidX(webViewBounds), CGRectGetMidY(webViewBounds));
+  CGRect dialogBounds = self.activityIndicatorView.bounds;
+  self.loadingView.center = CGPointMake(CGRectGetMidX(dialogBounds), CGRectGetMidY(dialogBounds));
 
-  if (CGRectGetHeight(webViewBounds) == 0.0) {
+  if (CGRectGetHeight(dialogBounds) == 0.0) {
     self.closeButton.alpha = 0.0;
   } else {
     self.closeButton.alpha = 1.0;
@@ -192,44 +176,14 @@ static id<FBSDKErrorCreating> _errorFactory;
 
 - (void)_close:(id)sender
 {
-  [self.delegate webDialogViewDidCancel:self];
-}
-
-#pragma mark - WKNavigationDelegate
-
-- (void)webView:(NSObject *)webView didFailNavigation:(NSObject *)navigation withError:(NSError *)error
-{
-  [self.loadingView stopAnimating];
-
-  // 102 == WebKitErrorFrameLoadInterruptedByPolicyChange
-  // NSURLErrorCancelled == "Operation could not be completed", note NSURLErrorCancelled occurs when the user clicks
-  // away before the page has completely loaded, if we find cases where we want this to result in dialog failure
-  // (usually this just means quick-user), then we should add something more robust here to account for differences in
-  // application needs
-  if (!(([error.domain isEqualToString:NSURLErrorDomain] && error.code == NSURLErrorCancelled)
-        || ([error.domain isEqualToString:@"WebKitErrorDomain"] && error.code == 102))) {
-    [self.delegate webDialogView:self didFailWithError:error];
-  }
-}
-
-- (void)                  webView:(NSObject *)webView
-  decidePolicyForNavigationAction:(NSObject *)navigationAction
-                  decisionHandler:(void (^)(NSObject*))decisionHandler
-{
-
-}
-
-- (void)webView:(NSObject *)webView didFinishNavigation:(NSObject *)navigation
-{
-  [self.loadingView stopAnimating];
-  [self.delegate webDialogViewDidFinishLoad:self];
+  [self.delegate dialogViewDidCancel:self];
 }
 
 #if DEBUG
 
 + (void)resetClassDependencies
 {
-  self.webViewProvider = nil;
+  self.connectViewProvider = nil;
   self.urlOpener = nil;
   self.errorFactory = nil;
 }

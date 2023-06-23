@@ -11,7 +11,7 @@
 import TestTools
 import XCTest
 
-final class BridgeAPIProtocolWebV2Tests: XCTestCase {
+final class BridgeAPIProtocol2Tests: XCTestCase {
 
   enum Keys {
     static let actionID = "action_id"
@@ -30,7 +30,7 @@ final class BridgeAPIProtocolWebV2Tests: XCTestCase {
   let validQueryParameters = ["Foo": "Bar"]
 
   // swiftlint:disable implicitly_unwrapped_optional
-  var bridge: BridgeAPIProtocolWebV2!
+  var bridge: BridgeAPIProtocol2!
   var serverConfigurationProvider: _ServerConfigurationProviding!
   var nativeBridge: TestBridgeAPIProtocol!
   var errorFactory: ErrorCreating!
@@ -47,7 +47,7 @@ final class BridgeAPIProtocolWebV2Tests: XCTestCase {
     internalUtility = TestInternalUtility()
     bundle = TestBundle()
     bundle.fb_bundleIdentifier = Values.bundleIdentifier
-    bridge = BridgeAPIProtocolWebV2(
+    bridge = BridgeAPIProtocol2(
       serverConfigurationProvider: serverConfigurationProvider,
       nativeBridge: nativeBridge,
       errorFactory: errorFactory,
@@ -91,7 +91,7 @@ final class BridgeAPIProtocolWebV2Tests: XCTestCase {
   }
 
   func testDefaultDependencies() throws {
-    bridge = BridgeAPIProtocolWebV2()
+    bridge = BridgeAPIProtocol2()
 
     XCTAssertTrue(
       bridge.serverConfigurationProvider is _ServerConfigurationManager,
@@ -388,7 +388,7 @@ final class BridgeAPIProtocolWebV2Tests: XCTestCase {
       withDictionary: ["dialogConfigurations": [name: dialogConfiguration]]
     )
     serverConfigurationProvider = TestServerConfigurationProvider(configuration: configuration)
-    bridge = BridgeAPIProtocolWebV2(
+    bridge = BridgeAPIProtocol2(
       serverConfigurationProvider: serverConfigurationProvider,
       nativeBridge: nativeBridge,
       errorFactory: errorFactory,

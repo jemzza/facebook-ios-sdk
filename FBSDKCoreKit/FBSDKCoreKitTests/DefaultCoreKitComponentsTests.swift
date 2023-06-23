@@ -112,13 +112,6 @@ final class DefaultCoreKitComponentsTests: XCTestCase {
     )
   }
 
-  func testAppLinkResolver() {
-    XCTAssertTrue(
-      components.appLinkResolver === WebViewAppLinkResolver.shared,
-      "The default components should use the shared WebViewAppLinkResolver as its app link resolver"
-    )
-  }
-
   func testAppLinkTargetFactory() {
     XCTAssertTrue(
       components.appLinkTargetFactory is AppLinkTargetFactory,
@@ -670,13 +663,6 @@ final class DefaultCoreKitComponentsTests: XCTestCase {
     XCTAssertTrue(
       components.userIDProvider === components.appEvents,
       "The default components should use the components' app events as its user ID provider"
-    )
-  }
-
-  func testWebViewProvider() {
-    XCTAssertTrue(
-      components.webViewProvider is _WebViewFactory,
-      "The default components should use an instance of WebViewFactory as its web view provider"
     )
   }
 }

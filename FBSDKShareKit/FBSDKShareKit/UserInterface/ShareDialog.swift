@@ -56,7 +56,7 @@ public class ShareDialog: NSObject, SharingDialog { // swiftlint:disable:this pr
    */
   public var shouldFailOnDataError = false
 
-  var webDialog: _WebDialog?
+  var webDialog: _SupportDialog?
   private var temporaryFiles = [URL]()
 
   /**
@@ -534,7 +534,7 @@ extension ShareDialog {
 
     let parameters = dependencies.shareUtility.feedShareDictionary(for: content)
 
-    webDialog = _WebDialog(
+    webDialog = _SupportDialog(
       name: Self.feedMethodName,
       parameters: parameters as? [String: String]
     )
@@ -689,7 +689,7 @@ extension ShareDialog {
 
     let components = dependencies.shareUtility.buildWebShareBridgeComponents(for: content)
 
-    webDialog = _WebDialog(
+    webDialog = _SupportDialog(
       name: components.methodName,
       parameters: components.parameters as? [String: String]
     )
@@ -1107,7 +1107,7 @@ extension ShareDialog {
 
 extension ShareDialog: WebDialogDelegate {
   public func webDialog(
-    _ webDialog: _WebDialog,
+    _ webDialog: _SupportDialog,
     didCompleteWithResults results: [String: Any]
   ) {
     guard
@@ -1137,7 +1137,7 @@ extension ShareDialog: WebDialogDelegate {
     dependencies.internalUtility.unregisterTransientObject(self)
   }
 
-  public func webDialog(_ webDialog: _WebDialog, didFailWithError error: Error) {
+  public func webDialog(_ webDialog: _SupportDialog, didFailWithError error: Error) {
     guard self.webDialog === webDialog else { return }
 
     self.webDialog = nil
@@ -1146,7 +1146,7 @@ extension ShareDialog: WebDialogDelegate {
     Self.internalUtility?.unregisterTransientObject(self)
   }
 
-  public func webDialogDidCancel(_ webDialog: _WebDialog) {
+  public func webDialogDidCancel(_ webDialog: _SupportDialog) {
     guard self.webDialog === webDialog else { return }
 
     self.webDialog = nil

@@ -12,12 +12,12 @@
 
 #import <FBSDKCoreKit_Basics/FBSDKCoreKit_Basics.h>
 
-#import "FBSDKAppEventsWKWebViewKeys.h"
+#import "FBSDKAppEventsKeys.h"
 #import "FBSDKEventLogging.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-NSString *const FBSDKAppEventsWKWebViewMessagesPixelReferralParamKey = @"_fb_pixel_referral_id";
+NSString *const FBSDKAppEventsMessagesPixelReferralParamKey = @"_fb_pixel_referral_id";
 
 @protocol FBSDKEventLogging;
 @class WKUserContentController;

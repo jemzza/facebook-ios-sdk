@@ -6,13 +6,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-#import "FBSDKBridgeAPIProtocolWebV2.h"
+#import "FBSDKBridgeAPIProtocol2.h"
 
 @class FBSDKDialogConfiguration;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FBSDKBridgeAPIProtocolWebV2 (Testing)
+@interface FBSDKBridgeAPIProtocol2 (Testing)
 
 - (nullable NSURL *)_redirectURLWithActionID:(nullable NSString *)actionID
                                   methodName:(nullable NSString *)methodName

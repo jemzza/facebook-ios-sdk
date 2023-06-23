@@ -16,15 +16,15 @@ import Foundation
  */
 
 @objcMembers
-@objc(FBSDKWebDialog)
-public final class _WebDialog: NSObject {
+@objc(FBSDKSupportDialog)
+public final class _SupportDialog: NSObject {
   public var shouldDeferVisibility = false
-  public weak var delegate: WebDialogDelegate?
+  public weak var delegate: DialogDelegate?
   var name: String
-  var webViewFrame: CGRect
+  var frameActive: CGRect
   var parameters: [String: String]?
   var backgroundView: UIView?
-  var dialogView: FBWebDialogView?
+  var dialogView: FBSupportDialogView?
   var path: String?
 
   private enum AnimationDuration {
@@ -49,22 +49,21 @@ public final class _WebDialog: NSObject {
   public init(
     name: String,
     parameters: [String: String]?,
-    webViewFrame: CGRect = .zero,
+    frameActive: CGRect = .zero,
     path: String? = nil
   ) {
     self.name = name
     self.parameters = parameters
-    self.webViewFrame = webViewFrame
+    self.frameActive = frameActive
     self.path = path
   }
 
   public convenience init(name: String) {
-    self.init(name: name, parameters: nil, webViewFrame: .zero)
+    self.init(name: name, parameters: nil, frameActive: .zero)
   }
 
   public func show() {
     do {
-      let url = try generateURL()
       guard (try? Self.getDependencies().windowFinder.findWindow()) != nil else {
         _Logger.singleShotLogEntry(
           .developerErrors,
@@ -77,14 +76,10 @@ public final class _WebDialog: NSObject {
         return
       }
 
-      let frame = webViewFrame.isEmpty ? applicationFrameForOrientation() : webViewFrame
-      dialogView = FBWebDialogView(frame: frame)
+      let frame = frameActive.isEmpty ? applicationFrameForOrientation() : frame
+      dialogView = FBSupportDialogView(frame: frame)
       dialogView?.delegate = self
-      dialogView?.load(url)
 
-      if !shouldDeferVisibility {
-        showWebView()
-      }
     } catch {
       fail(with: error)
     }
@@ -115,12 +110,12 @@ public final class _WebDialog: NSObject {
   }
 
   func cancel() {
-    delegate?.webDialogDidCancel(self)
+    delegate?.dialogDidCancel(self)
     dismiss(animated: true)
   }
 
   func complete(with results: [String: Any]) {
-    delegate?.webDialog(self, didCompleteWithResults: results)
+    delegate?.dialog(self, didCompleteWithResults: results)
     dismiss(animated: true)
   }
 
@@ -147,7 +142,7 @@ public final class _WebDialog: NSObject {
   }
 
   func fail(with error: Error) {
-    delegate?.webDialog(self, didFailWithError: error)
+    delegate?.dialog(self, didFailWithError: error)
     dismiss(animated: true)
   }
 
@@ -167,53 +162,6 @@ public final class _WebDialog: NSObject {
       path: path ?? "/dialog/\(name)",
       queryParameters: urlParameters
     )
-  }
-
-  func showWebView() {
-    guard let window = try? Self.getDependencies().windowFinder.findWindow() else {
-      let message = "There are no valid windows in which to present this web dialog"
-      _Logger.singleShotLogEntry(
-        LoggingBehavior.developerErrors, logEntry: message
-      )
-      if let error = try? Self.getDependencies().errorFactory.unknownError(
-        message: message
-      ) {
-        fail(with: error)
-      }
-      return
-    }
-
-    addObservers()
-    backgroundView = UIView(frame: window.bounds)
-    backgroundView?.alpha = 0
-    backgroundView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    backgroundView?.backgroundColor = UIColor(white: 0.3, alpha: 0.8)
-
-    guard let dialogView = dialogView,
-          let backgroundView = backgroundView
-    else {
-      let message = "dialog or background view has not been created or set"
-      _Logger.singleShotLogEntry(
-        LoggingBehavior.developerErrors, logEntry: message
-      )
-      if let error = try? Self.getDependencies().errorFactory.unknownError(
-        message: message
-      ) {
-        fail(with: error)
-      }
-      return
-    }
-
-    window.addSubview(backgroundView)
-    window.addSubview(dialogView)
-    dialogView.becomeFirstResponder()
-
-    updateView(scale: 0.001, alpha: 0.0, animationDuration: 0.0)
-    updateView(scale: 1.1, alpha: 1.0, animationDuration: AnimationDuration.show) { _ in
-      self.updateView(scale: 0.9, alpha: 1.0, animationDuration: AnimationDuration.show) { _ in
-        self.updateView(scale: 1.0, alpha: 1.0, animationDuration: AnimationDuration.show)
-      }
-    }
   }
 
   func applicationFrameForOrientation() -> CGRect {
@@ -240,7 +188,7 @@ public final class _WebDialog: NSObject {
     completion: ((Bool) -> Void)? = nil
   ) {
     let transform = dialogView?.transform
-    let applicationFrame = webViewFrame.isEmpty ? applicationFrameForOrientation() : webViewFrame
+    let applicationFrame = frame.isEmpty ? applicationFrameForOrientation() : frame
     if scale == 1 {
       dialogView?.transform = .identity
       dialogView?.frame = applicationFrame
@@ -262,34 +210,26 @@ public final class _WebDialog: NSObject {
   }
 }
 
-// MARK: - WebDialogViewDelegate
 
-extension _WebDialog: WebDialogViewDelegate {
+extension _SupportDialog: SupportDialogViewDelegate {
 
-  public func webDialogView(_ webDialogView: FBWebDialogView, didCompleteWithResults results: [String: Any]) {
+  public func dialogView(_ dialogView: FBSupportDialogView, didCompleteWithResults results: [String: Any]) {
     complete(with: results)
   }
 
-  public func webDialogView(_ webDialogView: FBWebDialogView, didFailWithError error: Error) {
+  public func dialogView(_ dialogView: FBSupportDialogView, didFailWithError error: Error) {
     fail(with: error)
   }
 
-  public func webDialogViewDidCancel(_ webDialogView: FBWebDialogView) {
+  public func dialogViewDidCancel(_ dialogView: FBSupportDialogView) {
     cancel()
   }
 
-  public func webDialogViewDidFinishLoad(_ webDialogView: FBWebDialogView) {
-    if shouldDeferVisibility {
-      DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-        if self.dialogView != nil {
-          self.showWebView()
-        }
-      }
-    }
+  public func dialogViewDidFinishLoad(_ dialogView: FBSupportDialogView) {
   }
 }
 
-extension _WebDialog: DependentAsType {
+extension _SupportDialog: DependentAsType {
   struct TypeDependencies {
     var errorFactory: ErrorCreating
     var windowFinder: _WindowFinding

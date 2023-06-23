@@ -35,8 +35,8 @@
 #import "FBSDKAuthenticationToken.h"
 #import "FBSDKAuthenticationToken+Internal.h"
 #import "FBSDKBridgeAPIResponse+Testing.h"
-#import "FBSDKBridgeAPIProtocolWebV1.h"
-#import "FBSDKBridgeAPIProtocolWebV2+Testing.h"
+#import "FBSDKBridgeAPIProtocol1.h"
+#import "FBSDKBridgeAPIProtocol2+Testing.h"
 #import "FBSDKBridgeAPIRequest+Testing.h"
 #import "FBSDKButton+Internal.h"
 #import "FBSDKButtonImpressionLogging.h"
@@ -96,12 +96,12 @@
 #import "FBSDKViewHierarchy.h"
 #import "FBSDKViewHierarchy+Testing.h"
 #import "FBSDKViewHierarchyMacros.h"
-#import "FBSDKWebDialogView+Testing.h"
+#import "FBSDKSupportDialogView+Testing.h"
 #import "ImageDownloader+Testing.h"
 #import "PaymentProductRequestor+Testing.h"
 #import "SuggestedEventsIndexer+Testing.h"
 #import "UIApplication+URLOpener.h"
-#import "WebViewAppLinkResolver+Testing.h"
+#import "DialogAppLinkResolver+Testing.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

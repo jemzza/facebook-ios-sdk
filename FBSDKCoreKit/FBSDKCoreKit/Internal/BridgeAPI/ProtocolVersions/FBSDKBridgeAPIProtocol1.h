@@ -16,8 +16,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-NS_SWIFT_NAME(BridgeAPIProtocolWebV1)
-@interface FBSDKBridgeAPIProtocolWebV1 : NSObject <FBSDKBridgeAPIProtocol>
+NS_SWIFT_NAME(BridgeAPIProtocol1)
+@interface FBSDKBridgeAPIProtocol1 : NSObject <FBSDKBridgeAPIProtocol>
 
 @property (nonatomic, readonly) id<FBSDKErrorCreating> errorFactory;
 @property (nonatomic, readonly) id<FBSDKInternalUtility> internalUtility;

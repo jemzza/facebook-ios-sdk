@@ -309,7 +309,7 @@ final class MessageDialogTests: XCTestCase {
     // Opening bridge API request
     XCTAssertIdentical(bridgeAPIRequestOpener.capturedRequest, request, .showingValidDialog)
     XCTAssertEqual(
-      bridgeAPIRequestOpener.capturedUseSafariViewController,
+      bridgeAPIRequestOpener.capturedUseViewController,
       shareDialogConfiguration.stubbedShouldUseSafariViewController,
       .showingValidDialog
     )

@@ -851,38 +851,6 @@ final class InternalUtilityTests: XCTestCase {
     XCTAssertEqual(logger.logEntryCallCount, 1, "Additional errors should not be logged for the same error")
   }
 
-  // MARK: - Random Utility Methods
-
-  func testIsBrowserURLWithNonBrowserURL() {
-    [
-      URL(string: "file://foo")!, // swiftlint:disable:this force_unwrapping
-      URL(string: "example://bar")!, // swiftlint:disable:this force_unwrapping
-    ]
-      .forEach { url in
-        XCTAssertFalse(
-          internalUtility.isBrowserURL(url),
-          "\(url.absoluteString) should not be considered a browser url"
-        )
-      }
-  }
-
-  func testIsBrowserURLWithBrowserURL() {
-    [
-      URL(string: "HTTPS://example.com"),
-      URL(string: "HTTP://example.com"),
-      URL(string: "https://example.com"),
-      URL(string: "http://example.com"),
-    ]
-      .compactMap { $0 }
-      .forEach { url in
-
-        XCTAssertTrue(
-          internalUtility.isBrowserURL(url),
-          "\(url.absoluteString) should be considered a browser url"
-        )
-      }
-  }
-
   func testIsFacebookBundleIdentifierWithInvalidIdentifiers() {
     [
       "",

@@ -8,14 +8,13 @@
 
 #if !TARGET_OS_TV
 
-#import <UIKit/UIKit.h>
+#import "FBSDKAppLinkResolverDialogDelegate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-NS_SWIFT_NAME(WebView)
-@protocol FBSDKWebView;
+@implementation FBSDKAppLinkResolverDialogDelegate
 
-@interface NSObject (FBSDKWebView) <FBSDKWebView>
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -6,10 +6,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-#if !TARGET_OS_TV
-
-#import <FBSDKCoreKit/FBSDKWebView.h>
-#import <Foundation/Foundation.h>
+import Foundation
 
 /**
  Internal Type exposed to facilitate transition to Swift.
@@ -18,16 +15,10 @@
  @warning INTERNAL - DO NOT USE
  */
 
-NS_ASSUME_NONNULL_BEGIN
-
-NS_SWIFT_NAME(_WebViewProviding)
-@protocol FBSDKWebViewProviding
-
-- (id<FBSDKWebView>)createWebViewWithFrame:(CGRect)frame
-NS_SWIFT_NAME(createWebView(frame:));
-
-@end
-
-NS_ASSUME_NONNULL_END
-
-#endif
+@objcMembers
+@objc(FBSDKMessageFactory)
+public final class _MessageFactory: NSObject, _ConnectProviding {
+  public func createMessageTitle(frame: CGRect) -> ConnectTitle {
+    NSObject()
+  }
+}

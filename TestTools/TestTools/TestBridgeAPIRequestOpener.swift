@@ -15,24 +15,24 @@ public final class TestBridgeAPIRequestOpener: NSObject, BridgeAPIRequestOpening
   public var capturedURL: URL?
   public var capturedHandler: SuccessBlock?
   public var capturedRequest: BridgeAPIRequestProtocol?
-  public var capturedUseSafariViewController: Bool? // swiftlint:disable:this discouraged_optional_boolean
+  public var capturedUseViewController: Bool? // swiftlint:disable:this discouraged_optional_boolean
   public var capturedFromViewController: UIViewController?
   public var capturedCompletionBlock: BridgeAPIResponseBlock?
   public var openURLWithSFVCCount = 0
 
   public func open(
     _ request: BridgeAPIRequestProtocol,
-    useSafariViewController: Bool,
+    useViewController: Bool,
     from fromViewController: UIViewController?,
     completionBlock: @escaping BridgeAPIResponseBlock
   ) {
     capturedRequest = request
-    capturedUseSafariViewController = useSafariViewController
+    capturedUseViewController = useViewController
     capturedFromViewController = fromViewController
     capturedCompletionBlock = completionBlock
   }
 
-  public func openURLWithSafariViewController(
+  public func openURLWithViewController(
     url: URL,
     sender: URLOpening?,
     from fromViewController: UIViewController?,

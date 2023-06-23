@@ -79,7 +79,7 @@ final class CoreKitComponents {
   let urlSessionProxyFactory: _URLSessionProxyProviding
   let userDataStore: _UserDataPersisting
   let userIDProvider: _UserIDProviding
-  let webViewProvider: _WebViewProviding
+  let connectProvider: _ConnectProviding
   let aemManager: _AutoSetup
   let protectedModeManager: _AppEventsParameterProcessing
 
@@ -154,7 +154,7 @@ final class CoreKitComponents {
     urlSessionProxyFactory: _URLSessionProxyProviding,
     userDataStore: _UserDataPersisting,
     userIDProvider: _UserIDProviding,
-    webViewProvider: _WebViewProviding,
+    connectProvider: _ConnectProviding,
     aemManager: _AutoSetup,
     protectedModeManager: _AppEventsParameterProcessing
   ) {
@@ -226,7 +226,7 @@ final class CoreKitComponents {
     self.urlSessionProxyFactory = urlSessionProxyFactory
     self.userDataStore = userDataStore
     self.userIDProvider = userIDProvider
-    self.webViewProvider = webViewProvider
+    self.connectProvider = connectProvider
     self.aemManager = aemManager
     self.protectedModeManager = protectedModeManager
   }
@@ -373,7 +373,7 @@ final class CoreKitComponents {
       appEventsUtility: appEventsUtility,
       appLinkEventPoster: _MeasurementEvent(),
       appLinkFactory: AppLinkFactory(),
-      appLinkResolver: WebViewAppLinkResolver.shared,
+      appLinkResolver: ActivityAppLinkResolver.shared,
       appLinkTargetFactory: AppLinkTargetFactory(),
       appLinkURLFactory: AppLinkURLFactory(),
       atePublisherFactory: atePublisherFactory,
@@ -427,7 +427,7 @@ final class CoreKitComponents {
       urlSessionProxyFactory: urlSessionProxyFactory,
       userDataStore: userDataStore,
       userIDProvider: AppEvents.shared,
-      webViewProvider: _WebViewFactory(),
+      connectProvider: _MessageFactory(),
       aemManager: _AEMManager.shared,
       protectedModeManager: protectedModeManager
     )

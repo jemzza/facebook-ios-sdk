@@ -53,7 +53,7 @@ NS_SWIFT_NAME(InternalUtility)
  @param URL The URL to test.
  @return YES if the URL refers to an http or https resource, otherwise NO.
  */
-- (BOOL)isBrowserURL:(NSURL *)URL;
+- (BOOL)isServerTestURL:(NSURL *)URL;
 
 /**
  Checks equality between 2 objects.

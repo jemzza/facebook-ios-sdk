@@ -38,39 +38,6 @@ final class CoreKitConfiguratorTests: XCTestCase {
     super.tearDown()
   }
 
-  private class func resetTargets() {
-    AccessToken.resetClassDependencies()
-    AppEvents.shared.reset()
-    _AppEventsConfigurationManager.shared.resetDependencies()
-    _AppEventsDeviceInfo.shared.resetDependencies()
-    _AppEventsState.eventProcessors = nil
-    _AppEventsUtility.shared.reset()
-    AuthenticationToken.resetTokenCache()
-    FBButton.resetClassDependencies()
-    _GateKeeperManager.reset()
-    GraphRequest.resetClassDependencies()
-    GraphRequestConnection.resetClassDependencies()
-    GraphRequestConnection.resetCanMakeRequests()
-    ImpressionLoggingButton.resetClassDependencies()
-    _InstrumentManager.reset()
-    InternalUtility.reset()
-    _ServerConfigurationManager.shared.reset()
-    Settings.shared.reset()
-    AEMReporter.reset()
-    AppLinkNavigation.resetDependencies()
-    AppLinkURL.reset()
-    AppLinkUtility.reset()
-    _AuthenticationStatusUtility.resetClassDependencies()
-    _BridgeAPIRequest.resetClassDependencies()
-    _CodelessIndexer.reset()
-    _CrashShield.reset()
-    FBWebDialogView.resetClassDependencies()
-    _FeatureExtractor.reset()
-    _ModelManager.reset()
-    Profile.resetDependencies()
-    _AEMManager.shared.reset()
-  }
-
   func testConfiguringAccessToken() {
     XCTAssertNil(
       AccessToken.tokenCache,
@@ -1337,37 +1304,6 @@ final class CoreKitConfiguratorTests: XCTestCase {
       dependencies.urlHoster as AnyObject,
       components.urlHoster,
       "Profile should be configured with the URL hoster"
-    )
-  }
-
-  func testConfiguringWebDialogView() {
-    XCTAssertNil(
-      FBWebDialogView.webViewProvider,
-      "FBWebDialogView should not have a web view factory by default"
-    )
-    XCTAssertNil(
-      FBWebDialogView.urlOpener,
-      "FBWebDialogView should not have an internal URL opener by default"
-    )
-    XCTAssertNil(
-      FBWebDialogView.errorFactory,
-      "FBWebDialogView should not have an error factory by default"
-    )
-
-    configurator.performConfiguration()
-
-    XCTAssertTrue(
-      FBWebDialogView.webViewProvider === components.webViewProvider,
-      "FBWebDialogView should be configured with the web view factory"
-    )
-    XCTAssertTrue(
-      FBWebDialogView.urlOpener === components.internalURLOpener,
-      "FBWebDialogView should be configured with the internal URL opener"
-    )
-    XCTAssertIdentical(
-      FBWebDialogView.errorFactory,
-      components.errorFactory,
-      "FBWebDialogView should be configured with the error factory"
     )
   }
 }

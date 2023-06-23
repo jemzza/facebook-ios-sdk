@@ -17,8 +17,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-NS_SWIFT_NAME(BridgeAPIProtocolWebV2)
-@interface FBSDKBridgeAPIProtocolWebV2 : NSObject <FBSDKBridgeAPIProtocol>
+NS_SWIFT_NAME(BridgeAPIProtocol2)
+@interface FBSDKBridgeAPIProtocol2 : NSObject <FBSDKBridgeAPIProtocol>
 
 @property (nonatomic, readonly) id<FBSDKServerConfigurationProviding> serverConfigurationProvider;
 @property (nonatomic, readonly) id<FBSDKBridgeAPIProtocol> nativeBridge;

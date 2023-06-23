@@ -7,7 +7,6 @@
  */
 
 @testable import FBSDKCoreKit
-import SafariServices
 
 import TestTools
 import XCTest
@@ -167,7 +166,6 @@ final class BridgeAPITests: XCTestCase {
     [
       AuthenticationSessionState.none,
       .showAlert,
-      .showWebBrowser,
       .canceledBySystem,
     ]
       .shuffled()
@@ -201,7 +199,6 @@ final class BridgeAPITests: XCTestCase {
       AuthenticationSessionState.none,
       .started,
       .showAlert,
-      .showWebBrowser,
       .canceledBySystem,
     ]
       .shuffled()
@@ -225,8 +222,7 @@ final class BridgeAPITests: XCTestCase {
 
     XCTAssertEqual(
       api.authenticationSessionState,
-      .showWebBrowser,
-      "Becoming active when the state is 'showAlert' should set the state to be 'showWebBrowser'"
+      "Becoming active when the state is 'showAlert' should set the state'"
     )
     XCTAssertEqual(
       authSessionSpy.cancelCallCount,
@@ -297,7 +293,6 @@ final class BridgeAPITests: XCTestCase {
       AuthenticationSessionState.none,
       .started,
       .showAlert,
-      .showWebBrowser,
       .canceledBySystem,
     ]
       .shuffled()
@@ -333,7 +328,6 @@ final class BridgeAPITests: XCTestCase {
     [
       AuthenticationSessionState.none,
       .started,
-      .showWebBrowser,
       .canceledBySystem,
     ]
       .shuffled()
@@ -720,7 +714,6 @@ final class BridgeAPITests: XCTestCase {
       logger.capturedContents,
       """
       **ERROR**:
-      The SFSafariViewController's parent view controller was dismissed.
       This can happen if you are triggering login from a UIAlertController. Instead, make sure your topmost view \
       controller will not be prematurely dismissed.
       """
@@ -912,5 +905,3 @@ final class BridgeAPITests: XCTestCase {
     )
   }
 }
-
-final class TestSafariViewController: SFSafariViewController {}

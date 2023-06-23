@@ -10,7 +10,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class FBSDKWebDialog;
+@class FBSDKSupportDialog;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -20,8 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 
  @warning INTERNAL - DO NOT USE
  */
-NS_SWIFT_NAME(WebDialogDelegate)
-@protocol FBSDKWebDialogDelegate
+NS_SWIFT_NAME(DialogDelegate)
+@protocol FBSDKSupportDialogDelegate
 
 /**
  Internal Type exposed to facilitate transition to Swift.
@@ -29,7 +29,7 @@ NS_SWIFT_NAME(WebDialogDelegate)
 
  @warning INTERNAL - DO NOT USE
  */
-- (void)webDialog:(FBSDKWebDialog *)webDialog didCompleteWithResults:(NSDictionary<NSString *, id> *)results;
+- (void)dialog:(FBSDKSupportDialog *)dialog didCompleteWithResults:(NSDictionary<NSString *, id> *)results;
 
 /**
  Internal Type exposed to facilitate transition to Swift.
@@ -37,7 +37,7 @@ NS_SWIFT_NAME(WebDialogDelegate)
 
  @warning INTERNAL - DO NOT USE
  */
-- (void)webDialog:(FBSDKWebDialog *)webDialog didFailWithError:(NSError *)error;
+- (void)dialog:(FBSDKSupportDialog *)dialog didFailWithError:(NSError *)error;
 
 /**
  Internal Type exposed to facilitate transition to Swift.
@@ -45,7 +45,7 @@ NS_SWIFT_NAME(WebDialogDelegate)
 
  @warning INTERNAL - DO NOT USE
  */
-- (void)webDialogDidCancel:(FBSDKWebDialog *)webDialog;
+- (void)dialogDidCancel:(FBSDKSupportDialog *)dialog;
 
 @end
 

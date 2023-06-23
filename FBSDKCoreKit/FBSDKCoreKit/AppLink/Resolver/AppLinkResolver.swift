@@ -139,7 +139,7 @@ public final class AppLinkResolver: NSObject, AppLinkResolving {
       fallbackURL = nil
     }
 
-    return AppLink(sourceURL: url, targets: targets, webURL: fallbackURL)
+    return AppLink(sourceURL: url, targets: targets, url: fallbackURL)
   }
 }
 

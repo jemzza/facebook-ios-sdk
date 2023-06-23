@@ -6,12 +6,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-final class TestWebViewFactory: _WebViewProviding {
+final class MessageFactory: _MessageProviding {
   var capturedFrame: CGRect?
-  let webView = TestWebView()
+  let message = MessageFactory()
 
-  func createWebView(frame: CGRect) -> WebView {
+  func createMessageTitle(frame: CGRect) -> AppConnect {
     capturedFrame = frame
-    return webView
+    return message
   }
 }

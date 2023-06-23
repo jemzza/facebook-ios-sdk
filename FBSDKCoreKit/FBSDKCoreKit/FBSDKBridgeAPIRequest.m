@@ -18,8 +18,8 @@
 
 #import "FBSDKBridgeAPIProtocol.h"
 #import "FBSDKBridgeAPIProtocolType.h"
-#import "FBSDKBridgeAPIProtocolWebV1.h"
-#import "FBSDKBridgeAPIProtocolWebV2.h"
+#import "FBSDKBridgeAPIProtocol1.h"
+#import "FBSDKBridgeAPIProtocol2.h"
 #import "FBSDKInternalUtility+Internal.h"
 #import "FBSDKURLScheme.h"
 
@@ -139,8 +139,8 @@ static _Nullable id<FBSDKSettings> _settings;
         FBSDKURLSchemeMessengerApp : [[FBSDKBridgeAPIProtocolNativeV1 alloc] initWithAppScheme:@"fb-messenger-share-api"]
       },
       @(FBSDKBridgeAPIProtocolTypeWeb) : @{
-        FBSDKURLSchemeHTTPS : [FBSDKBridgeAPIProtocolWebV1 new],
-        FBSDKURLSchemeWeb : [FBSDKBridgeAPIProtocolWebV2 new]
+        FBSDKURLSchemeHTTPS : [FBSDKBridgeAPIProtocol1 new],
+        FBSDKURLSchemeWeb : [FBSDKBridgeAPIProtocol2 new]
       },
     };
   }

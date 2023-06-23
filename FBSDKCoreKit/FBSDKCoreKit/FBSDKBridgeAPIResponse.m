@@ -75,7 +75,7 @@
         break;
       }
       case FBSDKBridgeAPIProtocolTypeWeb: {
-        if (![FBSDKInternalUtility.sharedUtility isSafariBundleIdentifier:sourceApplication]) {
+        if (![FBSDKInternalUtility.sharedUtility isApplicationBundleIdentifier:sourceApplication]) {
           if (errorRef != NULL) {
             *errorRef = [[NSError alloc] initWithDomain:FBSDKErrorDomain
                                                    code:FBSDKErrorBridgeAPIResponse

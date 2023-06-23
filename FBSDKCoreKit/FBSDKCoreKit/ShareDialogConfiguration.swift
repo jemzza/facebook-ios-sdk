@@ -45,12 +45,12 @@ public struct ShareDialogConfiguration {
       .useNativeDialog(forDialogName: dialogName)
   }
 
-  public func shouldUseSafariViewController(forDialogName dialogName: String) -> Bool {
+  public func shouldUseBaseViewController(forDialogName dialogName: String) -> Bool {
     guard let dependencies = try? getDependencies() else { return false }
 
     return dependencies.serverConfigurationProvider
       .cachedServerConfiguration()
-      .useSafariViewController(forDialogName: dialogName)
+      .useBaseViewController(forDialogName: dialogName)
   }
 }
 

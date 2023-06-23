@@ -35,9 +35,9 @@ final class JoinTournamentDialogTests: XCTestCase {
     tournamentID = nil
     payload = nil
     joinDialog = JoinTournamentDialog()
-    joinDialog.dialog = _WebDialog(name: "Test")
+    joinDialog.dialog = _SupportDialog(name: "Test")
 
-    _WebDialog.setDependencies(
+    _SupportDialog.setDependencies(
       .init(
         errorFactory: TestErrorFactory(),
         windowFinder: TestWindowFinder(window: UIWindow())
@@ -48,7 +48,7 @@ final class JoinTournamentDialogTests: XCTestCase {
   override func tearDown() {
     super.tearDown()
 
-    _WebDialog.resetDependencies()
+    _SupportDialog.resetDependencies()
   }
 
   func testDialogSucceeds() throws {

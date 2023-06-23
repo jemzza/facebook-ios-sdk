@@ -16,7 +16,7 @@ FOUNDATION_EXPORT NSString *const FBSDKDialogConfigurationNameDefault;
 FOUNDATION_EXPORT NSString *const FBSDKDialogConfigurationNameSharing;
 
 FOUNDATION_EXPORT NSString *const FBSDKDialogConfigurationFeatureUseNativeFlow;
-FOUNDATION_EXPORT NSString *const FBSDKDialogConfigurationFeatureUseSafariViewController;
+FOUNDATION_EXPORT NSString *const FBSDKDialogConfigurationFeatureUseBaseViewController;
 
 @interface FBSDKServerConfiguration (Internal)
 

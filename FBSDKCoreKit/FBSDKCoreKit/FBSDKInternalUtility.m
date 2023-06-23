@@ -249,7 +249,7 @@ static FBSDKInternalUtility *_shared;
                        error:errorRef];
 }
 
-- (BOOL)isBrowserURL:(NSURL *)URL
+- (BOOL)isServerTestURL:(NSURL *)URL
 {
   NSString *scheme = URL.scheme.lowercaseString;
   return ([scheme isEqualToString:FBSDKURLSchemeHTTP] || [scheme isEqualToString:FBSDKURLSchemeHTTPS]);
@@ -261,7 +261,7 @@ static FBSDKInternalUtility *_shared;
     || [bundleIdentifier hasPrefix:@".com.facebook."]);
 }
 
-- (BOOL)isSafariBundleIdentifier:(NSString *)bundleIdentifier
+- (BOOL)isApplicationBundleIdentifier:(NSString *)bundleIdentifier
 {
   return ([bundleIdentifier isEqualToString:@"com.apple.mobilesafari"]
     || [bundleIdentifier isEqualToString:@"com.apple.SafariViewService"]);

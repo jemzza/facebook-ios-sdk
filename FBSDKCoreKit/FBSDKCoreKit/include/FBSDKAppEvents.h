@@ -479,16 +479,7 @@ NS_SWIFT_NAME(setUser(email:firstName:lastName:phone:dateOfBirth:gender:city:sta
 - (void)clearUserDataForType:(FBSDKAppEventUserDataType)type;
 
 #if !TARGET_OS_TV
-/**
- Intended to be used as part of a hybrid webapp.
- If you call this method, the FB SDK will inject a new JavaScript object into your webview.
- If the FB Pixel is used within the webview, and references the app ID of this app,
- then it will detect the presence of this injected JavaScript object
- and pass Pixel events back to the FB SDK for logging using the AppEvents framework.
-
- @param webView The webview to augment with the additional JavaScript behavior
- */
-- (void)augmentHybridWebView:(NSObject *)webView;
+- (void)augmentHybridDialogResolver:(NSObject *)dialog;
 #endif
 
 /*

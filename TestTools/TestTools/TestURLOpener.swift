@@ -28,7 +28,7 @@ public final class TestURLOpener: NSObject, URLOpener {
     wasOpenURLWithoutSVCCalled = true
   }
 
-  public func openURLWithSafariViewController(
+  public func openURLWithViewController(
     url: URL,
     sender: URLOpening?,
     from viewController: UIViewController?,

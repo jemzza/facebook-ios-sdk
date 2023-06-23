@@ -22,7 +22,7 @@ NS_SWIFT_NAME(URLOpening)
 @protocol FBSDKURLOpening <NSObject>
 
 // Implementations should make sure they can handle nil parameters
-// which is possible in SafariViewController.
+// which is possible
 // see canOpenURL below.
 - (BOOL)application:(nullable UIApplication *)application
             openURL:(nullable NSURL *)url

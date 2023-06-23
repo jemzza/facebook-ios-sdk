@@ -28,7 +28,7 @@ final class GamingWebDialogTests: XCTestCase {
   // swiftlint:disable:next implicitly_unwrapped_optional
   var gamingWebDialog: GamingWebDialog<Success>!
   // swiftlint:disable:next implicitly_unwrapped_optional
-  var webDialog: _WebDialog!
+  var webDialog: _SupportDialog!
 
   var webDelegate: WebDialogDelegate { gamingWebDialog as WebDialogDelegate }
   var dialogCompleted = false
@@ -45,7 +45,7 @@ final class GamingWebDialogTests: XCTestCase {
 
     gamingWebDialog = GamingWebDialog(name: "test")
 
-    webDialog = _WebDialog(name: "Test")
+    webDialog = _SupportDialog(name: "Test")
     webDialog.delegate = webDelegate
     gamingWebDialog.dialog = webDialog
     gamingWebDialog.completion = { result in
@@ -90,7 +90,7 @@ final class GamingWebDialogTests: XCTestCase {
 
   func testDialogFailsWithUnknownError() throws {
     gamingWebDialog.webDialog(
-      _WebDialog(name: "wrong dialog"),
+      _SupportDialog(name: "wrong dialog"),
       didCompleteWithResults: [:]
     )
     gamingWebDialog.show { _ in }

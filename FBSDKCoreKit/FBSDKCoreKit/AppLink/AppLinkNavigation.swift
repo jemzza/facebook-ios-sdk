@@ -31,15 +31,11 @@ public final class AppLinkNavigation: NSObject {
     set { defaultResolver = newValue }
   }
 
-  /**
-   The default resolver to be used for App Link resolution. If the developer has not set one explicitly,
-   a basic, built-in `WebViewAppLinkResolver` will be used.
-   */
   @objc(defaultResolver)
   public static var defaultResolver: AppLinkResolving {
     get {
       // swiftformat:disable:next redundantSelf
-      self.appLinkResolver ?? WebViewAppLinkResolver.shared
+      self.appLinkResolver ?? AppLinkResolver()
     }
 
     set {
@@ -181,8 +177,8 @@ public final class AppLinkNavigation: NSObject {
     do {
       // Fall back to opening the url in the browser if available.
       if openedURL == nil,
-         let webURL = appLink.webURL,
-         let appLinkBrowserURL = try appLinkURL(targetURL: webURL),
+         let url = appLink.url,
+         let appLinkBrowserURL = try appLinkURL(targetURL: url),
          urlOpener.open(appLinkBrowserURL) {
         openedURL = appLinkBrowserURL
         navigationType = .browser
@@ -379,8 +375,8 @@ public final class AppLinkNavigation: NSObject {
     if let eligibleTargetURL = eligibleTarget?.url,
        (try? appLinkURL(targetURL: eligibleTargetURL)) != nil {
       return .app
-    } else if let webURL = appLink.webURL,
-              (try? appLinkURL(targetURL: webURL)) != nil {
+    } else if let url = appLink.url,
+              (try? appLinkURL(targetURL: url)) != nil {
       return .browser
     } else {
       return .failure

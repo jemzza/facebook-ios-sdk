@@ -11,33 +11,15 @@
 import TestTools
 import XCTest
 
-final class WebViewAppLinkResolverTests: XCTestCase {
+final class AppLinkResolverTests: XCTestCase {
 
   var result: [String: Any]?
   var error: Error?
   let data = "foo".data(using: .utf8)! // swiftlint:disable:this force_unwrapping
   let sessionProvider = TestSessionProvider()
   let errorFactory = TestErrorFactory()
-  lazy var resolver = WebViewAppLinkResolver(
-    sessionProvider: sessionProvider,
-    errorFactory: errorFactory
-  )
 
   // MARK: - Dependencies
-
-  func testDefaultDependencies() throws {
-    resolver = WebViewAppLinkResolver.shared
-    XCTAssertTrue(
-      resolver.sessionProvider === URLSession.shared,
-      "Should use the shared system session by default"
-    )
-
-    let reporter = try _ErrorFactory.getDependencies().reporter
-    XCTAssertTrue(
-      reporter === ErrorReporter.shared,
-      "Should use the shared error reporter by default"
-    )
-  }
 
   func testConfiguringDependencies() {
     XCTAssertTrue(
@@ -205,7 +187,7 @@ final class WebViewAppLinkResolverTests: XCTestCase {
       "Should use the destination as the source url for the app link"
     )
     XCTAssertEqual(
-      link.webURL,
+      link.url,
       SampleURLs.valid,
       "The web url should default to the destination"
     )
@@ -223,7 +205,7 @@ final class WebViewAppLinkResolverTests: XCTestCase {
       "Should use the destination as the source url for the app link"
     )
     XCTAssertEqual(
-      link.webURL,
+      link.url,
       SampleURLs.valid,
       "The web url should default to the destination"
     )
@@ -247,51 +229,6 @@ final class WebViewAppLinkResolverTests: XCTestCase {
       target.appStoreId,
       "Should create a target even if the app store ID is invalid"
     )
-  }
-
-  func testBuildingLinkWithShouldNotFallbackToWebURL() {
-    ["no", "false", "0"].forEach { fallbackValue in
-      let link = resolver.appLink(
-        fromALData: SampleAppLinkResolverData.withShouldFallback(fallbackValue),
-        destination: SampleURLs.valid
-      )
-      XCTAssertEqual(
-        link.sourceURL,
-        SampleURLs.valid,
-        "Should use the destination as the source url for the app link"
-      )
-      XCTAssertNil(
-        link.webURL,
-        "The web url should be nil when the fallback is falsy"
-      )
-      XCTAssertTrue(
-        link.targets.isEmpty,
-        "Should not create targets for either platform"
-      )
-    }
-  }
-
-  func testBuildingLinkWithShouldFallbackToWebURL() {
-    ["yes", "true", "1"].forEach { fallbackValue in
-      let link = resolver.appLink(
-        fromALData: SampleAppLinkResolverData.withShouldFallback(fallbackValue),
-        destination: SampleURLs.valid
-      )
-      XCTAssertEqual(
-        link.sourceURL,
-        SampleURLs.valid,
-        "Should use the destination as the source url for the app link"
-      )
-      XCTAssertEqual(
-        link.webURL?.absoluteString,
-        SampleAppLinkResolverData.urlString,
-        "The web url should be used when the fallback is truthy"
-      )
-      XCTAssertTrue(
-        link.targets.isEmpty,
-        "Should not create targets for either platform"
-      )
-    }
   }
 
   // MARK: - Helpers

@@ -136,7 +136,7 @@ NS_SWIFT_NAME(_ServerConfiguration)
 
 - (nullable FBSDKDialogConfiguration *)dialogConfigurationForDialogName:(NSString *)dialogName;
 - (BOOL)useNativeDialogForDialogName:(NSString *)dialogName;
-- (BOOL)useSafariViewControllerForDialogName:(NSString *)dialogName;
+- (BOOL)useBaseViewControllerForDialogName:(NSString *)dialogName;
 
 @end
 

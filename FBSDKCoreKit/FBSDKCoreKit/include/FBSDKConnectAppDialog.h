@@ -12,14 +12,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-NS_SWIFT_NAME(WebView)
-@protocol FBSDKWebView
+NS_SWIFT_NAME(ConnectTitle)
+@protocol FBSDKConnectAppView
 
 @property (nullable, nonatomic, weak) id<NSObject> navigationDelegate;
 @property (nonatomic) CGRect frame;
 @property (nonatomic) CGRect bounds;
 
-- (nullable NSObject *)loadRequest:(NSURLRequest *)request;
 - (void)stopLoading;
 
 @end

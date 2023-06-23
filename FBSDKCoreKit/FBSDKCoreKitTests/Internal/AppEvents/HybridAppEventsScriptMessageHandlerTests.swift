@@ -144,7 +144,7 @@ final class HybridAppEventsScriptMessageHandlerTests: XCTestCase {
     )
     XCTAssertEqual(
       loggerAndNotifier.capturedMessage,
-      "Can't bridge an event without a referral Pixel ID. Check your webview Pixel configuration.",
+      "Can't bridge an event without a referral Pixel ID. Check your configuration.",
       "Should log and notify with a useful message"
     )
   }
@@ -182,7 +182,7 @@ final class HybridAppEventsScriptMessageHandlerTests: XCTestCase {
     )
     XCTAssertEqual(
       loggerAndNotifier.capturedMessage,
-      "Could not find parameters for your Pixel request. Check your webview Pixel configuration.",
+      "Could not find parameters for your Pixel request. Check your configuration.",
       "Should log and notify about missing parameters"
     )
     assertEventLogged(

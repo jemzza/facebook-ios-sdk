@@ -80,28 +80,6 @@ final class BridgeAPIRequestTests: XCTestCase {
     )
   }
 
-  func testProperties() throws {
-    let request = try XCTUnwrap(makeRequest())
-
-    XCTAssertEqual(request.protocolType, .web, "A request should use the provided protocol type")
-    XCTAssertTrue(
-      request.protocol is BridgeAPIProtocolWebV1,
-      "A request should use a protocol based on its protocol type"
-    )
-    XCTAssertEqual(request.scheme, .https, "A request should use the provided scheme")
-    XCTAssertEqual(request.methodName, "methodName", "A request should use the provided method name")
-
-    let parametersMessage = "A request should use the provided parameters"
-    let parameters = try XCTUnwrap(request.parameters, parametersMessage)
-    XCTAssertEqual(parameters.count, 1, parametersMessage)
-    XCTAssertEqual(parameters["parameter"] as? String, "value", parametersMessage)
-
-    let userInfoMessage = "A request should use the provided user info"
-    let userInfo = try XCTUnwrap(request.userInfo, userInfoMessage)
-    XCTAssertEqual(userInfo.count, 1, userInfoMessage)
-    XCTAssertEqual(userInfo["key"] as? String, "value", userInfoMessage)
-  }
-
   func testUnopenableRequestURL() throws {
     let request = try XCTUnwrap(makeRequest())
     internalURLOpener.canOpenURL = false

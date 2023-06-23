@@ -47,7 +47,7 @@ final class CoreKitConfigurator: CoreKitConfiguring {
     configureFeatureExtractor()
     configureModelManager()
     configureProfile()
-    configureWebDialogView()
+    configureSupportDialogView()
   }
 }
 
@@ -353,9 +353,9 @@ private extension CoreKitConfigurator {
     )
   }
 
-  func configureWebDialogView() {
-    FBWebDialogView.configure(
-      webViewProvider: components.webViewProvider,
+  func configureSupportDialogView() {
+    FBSupportDialogView.configure(
+      provider: components.connectProvider,
       urlOpener: components.internalURLOpener,
       errorFactory: components.errorFactory
     )

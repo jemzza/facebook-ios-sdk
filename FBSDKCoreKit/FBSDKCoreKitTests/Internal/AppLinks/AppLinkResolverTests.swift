@@ -258,7 +258,7 @@ final class AppLinkResolverTests: XCTestCase {
     guard let link = resolved else {
       return XCTFail("Must have a resolved app link")
     }
-    XCTAssertEqual(link.webURL, Keys.appLinkURL)
+    XCTAssertEqual(link.url, Keys.appLinkURL)
   }
 
   func testResolvingSetsFallbackIfSpecified() throws {
@@ -285,7 +285,7 @@ final class AppLinkResolverTests: XCTestCase {
 
     XCTAssertNil(error)
 
-    XCTAssertEqual(resolved?.webURL?.absoluteString, Values.fallbackURL)
+    XCTAssertEqual(resolved?.url?.absoluteString, Values.fallbackURL)
   }
 
   func testResolvingUsesSourceAsFallbackIfSpecified() throws {
@@ -311,7 +311,7 @@ final class AppLinkResolverTests: XCTestCase {
 
     XCTAssertNil(error)
 
-    XCTAssertEqual(resolved?.webURL, Keys.appLinkURL)
+    XCTAssertEqual(resolved?.url, Keys.appLinkURL)
   }
 
   func testResolvingSetsNoFallbackIfSpecified() throws {
@@ -337,7 +337,7 @@ final class AppLinkResolverTests: XCTestCase {
     graphRequest.capturedCompletionHandler?(nil, result, nil)
 
     XCTAssertNil(error)
-    XCTAssertNil(resolved?.webURL)
+    XCTAssertNil(resolved?.url)
   }
 
   func testResolvingWithError() {
@@ -354,7 +354,7 @@ final class AppLinkResolverTests: XCTestCase {
   }
 
   func testReadsFromCache() {
-    let link = AppLink(sourceURL: Keys.appLinkURL, targets: [], webURL: nil)
+    let link = AppLink(sourceURL: Keys.appLinkURL, targets: [], url: nil)
     resolver.cachedAppLinks = [Keys.appLinkURL: link]
 
     resolver.appLink(from: Keys.appLinkURL) {

@@ -40,8 +40,8 @@ public final class GameRequestDialog: NSObject {
 
   private var dialogIsFrictionless = false
   private var isAwaitingResult = false
-  private lazy var webDialog: _WebDialog = {
-    let webDialog = _WebDialog(name: GameRequestDialog.appRequestMethodName)
+  private lazy var webDialog: _SupportDialog = {
+    let webDialog = _SupportDialog(name: GameRequestDialog.appRequestMethodName)
     webDialog.delegate = self
     return webDialog
   }()
@@ -426,19 +426,19 @@ public final class GameRequestDialog: NSObject {
 }
 
 extension GameRequestDialog: WebDialogDelegate {
-  public func webDialog(_ webDialog: _WebDialog, didCompleteWithResults results: [String: Any]) {
+  public func webDialog(_ webDialog: _SupportDialog, didCompleteWithResults results: [String: Any]) {
     guard self.webDialog === webDialog else { return }
 
     didComplete(results: results)
   }
 
-  public func webDialog(_ webDialog: _WebDialog, didFailWithError error: Error) {
+  public func webDialog(_ webDialog: _SupportDialog, didFailWithError error: Error) {
     guard self.webDialog === webDialog else { return }
 
     didFail(error: error)
   }
 
-  public func webDialogDidCancel(_ webDialog: _WebDialog) {
+  public func webDialogDidCancel(_ webDialog: _SupportDialog) {
     guard self.webDialog === webDialog else { return }
 
     didCancel()

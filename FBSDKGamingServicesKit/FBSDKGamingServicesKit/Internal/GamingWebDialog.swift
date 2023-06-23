@@ -23,7 +23,7 @@ public class GamingWebDialog<Success: GamingWebDialogSuccess>: WebDialogDelegate
   }
 
   public var completion: ((Result<Success, Error>) -> Void)?
-  var dialog: _WebDialog?
+  var dialog: _SupportDialog?
   var parameters = [String: String]()
   var frame = CGRect.zero
   let name: String
@@ -34,7 +34,7 @@ public class GamingWebDialog<Success: GamingWebDialogSuccess>: WebDialogDelegate
 
   func show(completion: @escaping (Result<Success, Error>) -> Void) {
     self.completion = completion
-    dialog = _WebDialog(
+    dialog = _SupportDialog(
       name: name,
       parameters: parameters,
       webViewFrame: frame,
@@ -45,7 +45,7 @@ public class GamingWebDialog<Success: GamingWebDialogSuccess>: WebDialogDelegate
     dialog?.show()
   }
 
-  public func webDialog(_ webDialog: _WebDialog, didCompleteWithResults results: [String: Any]) {
+  public func webDialog(_ webDialog: _SupportDialog, didCompleteWithResults results: [String: Any]) {
     guard webDialog == dialog else {
       if let dialog = dialog {
         let error = _ErrorFactory().unknownError(message: "The dialog failed to retrieve results.")
@@ -78,7 +78,7 @@ public class GamingWebDialog<Success: GamingWebDialogSuccess>: WebDialogDelegate
     completion = nil
   }
 
-  public func webDialog(_ webDialog: _WebDialog, didFailWithError error: Error) {
+  public func webDialog(_ webDialog: _SupportDialog, didFailWithError error: Error) {
     guard webDialog == dialog else {
       return
     }
@@ -86,7 +86,7 @@ public class GamingWebDialog<Success: GamingWebDialogSuccess>: WebDialogDelegate
     InternalUtility.shared.unregisterTransientObject(self)
   }
 
-  public func webDialogDidCancel(_ webDialog: _WebDialog) {
+  public func webDialogDidCancel(_ webDialog: _SupportDialog) {
     guard webDialog == dialog else {
       return
     }

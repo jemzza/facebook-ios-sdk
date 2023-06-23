@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// exist in dynamically loaded frameworks.
 @protocol FBSDKDynamicFrameworkResolving <NSObject>
 
-- (nullable Class)safariViewControllerClass;
+- (nullable Class)BaseViewControllerClass;
 - (nullable Class)asIdentifierManagerClass;
 
 @end

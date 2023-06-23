@@ -29,16 +29,16 @@ NS_SWIFT_NAME(BridgeAPIRequestOpening)
 @protocol FBSDKBridgeAPIRequestOpening
 
 - (void)openBridgeAPIRequest:(NSObject<FBSDKBridgeAPIRequest> *)request
-     useSafariViewController:(BOOL)useSafariViewController
+     useBaseViewController:(BOOL)useBaseViewController
           fromViewController:(nullable UIViewController *)fromViewController
              completionBlock:(FBSDKBridgeAPIResponseBlock)completionBlock;
 
 // UNCRUSTIFY_FORMAT_OFF
-- (void)openURLWithSafariViewController:(NSURL *)url
+- (void)openURLWithBaseViewController:(NSURL *)url
                                  sender:(nullable id<FBSDKURLOpening>)sender
                      fromViewController:(nullable UIViewController *)fromViewController
                                 handler:(FBSDKSuccessBlock)handler
-NS_SWIFT_NAME(openURLWithSafariViewController(url:sender:from:handler:));
+NS_SWIFT_NAME(openURLWithBaseViewController(url:sender:from:handler:));
 // UNCRUSTIFY_FORMAT_ON
 
 - (void)openURL:(NSURL *)url

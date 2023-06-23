@@ -12,10 +12,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FBSDKWebViewAppLinkResolverWebViewDelegate : NSObject <NSObject>
+@interface FBSDKAppLinkResolverDialogDelegate : NSObject <NSObject>
 
-@property (nonatomic, copy) void (^didFinishLoad)(NSObject *webView);
-@property (nonatomic, copy) void (^didFailLoadWithError)(NSObject *webView, NSError *error);
+@property (nonatomic, copy) void (^didFinishLoad)(NSObject *dialogView);
+@property (nonatomic, copy) void (^didFailLoadWithError)(NSObject *dialogView, NSError *error);
 @property (nonatomic, assign) BOOL hasLoaded;
 
 @end

@@ -66,7 +66,7 @@ final class TestServerConfiguration: _ServerConfiguration {
     return true
   }
 
-  override func useSafariViewController(
+  override func useBaseViewController(
     forDialogName dialogName: String?
   ) -> Bool {
     capturedUseSafariControllerName = dialogName

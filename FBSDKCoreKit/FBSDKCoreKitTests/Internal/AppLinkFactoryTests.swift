@@ -14,7 +14,7 @@ import XCTest
 final class AppLinkFactoryTests: XCTestCase {
 
   let sourceURL = SampleURLs.valid(path: "source")
-  let webURL = SampleURLs.valid(path: "webURL")
+  let url = SampleURLs.valid(path: "url")
   let target = TestAppLinkTarget(url: nil, appStoreId: nil, appName: "foo")
   let isBackToReferrer = Bool.random()
 
@@ -23,7 +23,7 @@ final class AppLinkFactoryTests: XCTestCase {
     guard let appLink = factory.createAppLink(
       sourceURL: sourceURL,
       targets: [target],
-      webURL: webURL,
+      url: url,
       isBackToReferrer: isBackToReferrer
     ) as? AppLink
     else {
@@ -36,8 +36,8 @@ final class AppLinkFactoryTests: XCTestCase {
       "Should use the provided source URL to create the app link"
     )
     XCTAssertEqual(
-      appLink.webURL,
-      webURL,
+      appLink.url,
+      url,
       "Should use the provided web URL to create the app link"
     )
     XCTAssertTrue(

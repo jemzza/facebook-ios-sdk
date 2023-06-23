@@ -82,7 +82,7 @@ enum TestCoreKitComponents {
     urlSessionProxyFactory: _URLSessionProxyProviding = TestURLSessionProxyFactory(),
     userDataStore: _UserDataPersisting = TestUserDataStore(),
     userIDProvider: _UserIDProviding = TestUserIDProvider(),
-    webViewProvider: _WebViewProviding = TestWebViewFactory(),
+    provider: _AppProviding = MessageFactory(),
     aemManager: _AutoSetup = TestAEMManager(),
     protectedModeManager: _AppEventsParameterProcessing = TestAppEventsParameterProcessor()
   ) -> CoreKitComponents {
@@ -155,7 +155,7 @@ enum TestCoreKitComponents {
       urlSessionProxyFactory: urlSessionProxyFactory,
       userDataStore: userDataStore,
       userIDProvider: userIDProvider,
-      webViewProvider: webViewProvider,
+      provider: provider,
       aemManager: aemManager,
       protectedModeManager: protectedModeManager
     )

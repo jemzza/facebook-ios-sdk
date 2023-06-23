@@ -65,7 +65,7 @@ public final class SwitchContextDialog: ContextWebDialog, Showable {
       return false
     }
 
-    currentWebDialog = _WebDialog(
+    currentWebDialog = _SupportDialog(
       name: "context",
       parameters: [Keys.contextID: content.contextTokenID],
       webViewFrame: frame

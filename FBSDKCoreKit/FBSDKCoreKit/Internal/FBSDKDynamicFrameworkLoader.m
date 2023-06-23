@@ -106,9 +106,9 @@ _fbsdkdfl_handle_get_impl_(Security)
   return shared;
 }
 
-- (Class)safariViewControllerClass
+- (Class)BaseViewControllerClass
 {
-  return fbsdkdfl_SFSafariViewControllerClass();
+  return fbsdkdfl_BaseViewControllerClass();
 }
 
 - (Class)asIdentifierManagerClass
@@ -283,7 +283,7 @@ _fbsdkdfl_handle_get_impl_(SafariServices)
 
 #define _fbsdkdfl_SafariServices_get_c(SYMBOL) _fbsdkdfl_symbol_get_c(SafariServices, SYMBOL);
 
-Class fbsdkdfl_SFSafariViewControllerClass(void)
+Class fbsdkdfl_BaseViewControllerClass(void)
 {
   _fbsdkdfl_SafariServices_get_c(SFSafariViewController);
   return c;

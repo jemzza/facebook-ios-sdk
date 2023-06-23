@@ -25,9 +25,9 @@ NS_SWIFT_NAME(_AppLinkCreating)
 // UNCRUSTIFY_FORMAT_OFF
 - (id<FBSDKAppLink>)createAppLinkWithSourceURL:(nullable NSURL *)sourceURL
                                        targets:(NSArray<id<FBSDKAppLinkTarget>> *)targets
-                                        webURL:(nullable NSURL *)webURL
+                                        url:(nullable NSURL *)url
                               isBackToReferrer:(BOOL)isBackToReferrer
-NS_SWIFT_NAME(createAppLink(sourceURL:targets:webURL:isBackToReferrer:));
+NS_SWIFT_NAME(createAppLink(sourceURL:targets:url:isBackToReferrer:));
 // UNCRUSTIFY_FORMAT_ON
 
 @end
